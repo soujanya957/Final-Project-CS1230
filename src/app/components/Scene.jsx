@@ -4,7 +4,9 @@ import {
   useFrame,
   sRGBEncoding,
   ACESFilmicToneMapping,
+  useLoader,
 } from "@react-three/fiber";
+import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import {
   MeshTransmissionMaterial,
   OrbitControls,
@@ -47,6 +49,8 @@ const GlassSphere = ({ outerRadius, innerRadius }) => {
 
 const Scene = () => {
   const orbitRef = useRef();
+  const obj = useLoader(OBJLoader, "/giraffe.obj");
+
   return (
     <>
       <Leva />
@@ -60,6 +64,7 @@ const Scene = () => {
           preserveDrawingBuffer: true,
         }}
       >
+        <primitive object={obj} scale={0.1} />
         {/* <directionalLight position={[1, 2, 3]} intensity={0.8} /> */}
         <ambientLight intensity={0.3} />
         <spotLight
