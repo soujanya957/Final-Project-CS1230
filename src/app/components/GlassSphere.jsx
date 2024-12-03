@@ -27,7 +27,7 @@ export default function GlassSphere() {
         <MeshTransmissionMaterial
           {...materialProps}
           side={BackSide}
-          color="87CEEB"
+          color="#87ceeb"
         />
       </mesh>
     </>

@@ -10,10 +10,17 @@ import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import { OrbitControls, Environment } from "@react-three/drei";
 import { Leva } from "leva";
 import GlassSphere from "./GlassSphere";
+import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader";
+import { TextureLoader } from "three/src/loaders/TextureLoader";
 
 const Scene = () => {
   const orbitRef = useRef();
-  const obj = useLoader(OBJLoader, "/giraffe.obj");
+  const mtl = useLoader(MTLLoader, "/models/Giraffe.mtl");
+  const obj = useLoader(OBJLoader, "/models/giraffe.obj", (loader) => {
+    mtl.preload();
+    loader.setMaterials(mtl);
+    console.log(mtl);
+  });
 
   return (
     <>
@@ -21,11 +28,8 @@ const Scene = () => {
       <Canvas
         shadows
         gl={{
-          outputEncoding: sRGBEncoding,
-          toneMapping: ACESFilmicToneMapping,
           antialias: true,
           powerPreference: "high-performance",
-          preserveDrawingBuffer: true,
         }}
       >
         <primitive object={obj} scale={0.1} />
