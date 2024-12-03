@@ -11,43 +11,37 @@ import {
   Environment,
 } from "@react-three/drei";
 import { useControls, Leva } from "leva";
+import { CSG } from "@react-three/csg";
+import { BackSide } from "three";
 
-const GlassSphere = () => {
+const GlassSphere = ({ outerRadius, innerRadius }) => {
   const materialProps = useControls({
-    thickness: { value: 0.3, min: 0, max: 3, step: 0.05 },
+    thickness: { value: 2.8, min: 0, max: 3, step: 0.05 },
     roughness: { value: 0, min: 0, max: 1, step: 0.1 },
     transmission: { value: 1, min: 0, max: 1, step: 0.1 },
     ior: { value: 1.5, min: 0, max: 3, step: 0.1 },
-    chromaticAberration: { value: 0.01, min: 0, max: 1 },
+    chromaticAberration: { value: 0.1, min: 0, max: 1 },
     backside: { value: true },
   });
-  const sphereRef = useRef();
-
-  //animates things
-  // useFrame(() => {
-  //   if (sphereRef.current) {
-  //     sphereRef.current.rotation.y += 0.005;
-  //   }
-  // });
 
   return (
-    <mesh ref={sphereRef}>
-      <sphereGeometry args={[2, 32, 32]} />
-      {/* <meshPhysicalMaterial
-        transmission={1} // Allows light to pass through (fully transmissive)
-        thickness={0.5} // Simulates thickness for light refraction
-        roughness={0} // Smooth surface (0 for perfect smoothness)
-        metalness={0} // No metallic property
-        ior={1.5} // Index of refraction for glass
-        envMapIntensity={1} // Environment map intensity for reflections
-        clearcoat={1} // Enhances surface reflections
-        clearcoatRoughness={0} // Clear coat is smooth
-        attenuationDistance={0} // Control light attenuation (0 for infinite)
-        attenuationColor="white" // Light color passing through
-        color="#ffffff" // Base color of the glass
-      /> */}
-      <MeshTransmissionMaterial {...materialProps} />
-    </mesh>
+    <>
+      {/* Outer sphere */}
+      <mesh>
+        <sphereGeometry args={[2, 64, 64]} />
+        <MeshTransmissionMaterial {...materialProps} />
+      </mesh>
+
+      {/* Inner sphere */}
+      <mesh scale={0.8}>
+        <sphereGeometry args={[2, 64, 64]} />
+        <MeshTransmissionMaterial
+          {...materialProps}
+          side={BackSide}
+          color="87CEEB"
+        />
+      </mesh>
+    </>
   );
 };
 
@@ -57,6 +51,7 @@ const Scene = () => {
     <>
       <Leva />
       <Canvas
+        shadows
         gl={{
           outputEncoding: sRGBEncoding,
           toneMapping: ACESFilmicToneMapping,
@@ -66,16 +61,22 @@ const Scene = () => {
         }}
       >
         {/* <directionalLight position={[1, 2, 3]} intensity={0.8} /> */}
-        <ambientLight intensity={0.5} />
-        <spotLight position={[5, 5, 5]} intensity={1} />
-        <directionalLight position={[10, 10, 10]} intensity={1.5} />
+        <ambientLight intensity={0.3} />
+        <spotLight
+          position={[5, 5, 5]}
+          angle={0.2}
+          penumbra={0.5}
+          intensity={1.5}
+        />
+        <directionalLight position={[-5, 5, 5]} intensity={1} />
 
-        <GlassSphere />
-        <mesh>
+        <GlassSphere outerRadius={5} innerRadius={2} />
+        <mesh castShadow receiveShadow>
           <sphereGeometry args={[1, 32, 32]} />
         </mesh>
         <OrbitControls ref={orbitRef} />
-        <Environment files={"/studio.exr"} />
+        {/* makes it crash :( */}
+        {/* <Environment files={"/studio.exr"} /> */}
       </Canvas>
     </>
   );

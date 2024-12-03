@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@pmndrs/assets": "^1.7.0",
+    "@react-three/csg": "^3.2.0",
     "@react-three/drei": "^9.119.0",
     "@react-three/fiber": "^9.0.0-alpha.8",
     "leva": "^0.9.35",
