@@ -13,11 +13,22 @@ import Terrain from "./Terrain";
 
 const Scene = () => {
   const orbitRef = useRef();
+
   const mtl = useLoader(MTLLoader, "/models/Giraffe.mtl");
   const obj = useLoader(OBJLoader, "/models/Giraffe.obj", (loader) => {
     mtl.preload();
     loader.setMaterials(mtl);
   });
+
+  const mtlRac = useLoader(MTLLoader, "/models/Raccoon/Mesh_Raccoon.mtl");
+  const objRac = useLoader(
+    OBJLoader,
+    "/models/Raccoon/Mesh_Raccoon.obj",
+    (loader) => {
+      mtlRac.preload();
+      loader.setMaterials(mtlRac);
+    }
+  );
 
   useEffect(() => {
     const textureLoader = new TextureLoader();
@@ -26,7 +37,16 @@ const Scene = () => {
       mtl.materials["Giraffe_mat"].map = texture;
       mtl.materials["Giraffe_mat"].needsUpdate = true;
     }
-  }, [mtl]);
+    const RactextureLoader = new TextureLoader();
+    const textureRac = RactextureLoader.load(
+      "/models/Racoon/Raccoon_BaseColor.png"
+    );
+    if (mtlRac.materials["lambert2SG"]) {
+      mtlRac.materials["lambert2SG"].map = textureRac;
+      mtlRac.materials["lambert2SG"].needsUpdate = true;
+    }
+    console.log(mtlRac.materials);
+  }, [mtl, mtlRac]);
 
   return (
     <>
@@ -38,12 +58,13 @@ const Scene = () => {
           powerPreference: "high-performance",
         }}
       >
-        <gridHelper args={[10, 10]} />
+        {/* <gridHelper args={[10, 10]} /> */}
 
         <Lights />
         <primitive object={obj} scale={0.1} />
+        <primitive object={objRac} scale={0.01} />
 
-        <GlassSphere />
+        {/* <GlassSphere /> */}
         <Terrain />
         <Table />
         <OrbitControls ref={orbitRef} />

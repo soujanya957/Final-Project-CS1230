@@ -62,7 +62,7 @@ export default function Terrain({ resolution = 100 }) {
 
         const position = [
           (x * 2) / resolution,
-          height * 5,
+          height * 3,
           (y * 2) / resolution,
         ];
 
