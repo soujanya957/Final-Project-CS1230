@@ -5,4 +5,4 @@ Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
 Ni 1.00
 
-map_Kd Giraffe_BaseColor.png
+map_Kd ./Giraffe_BaseColor.png
