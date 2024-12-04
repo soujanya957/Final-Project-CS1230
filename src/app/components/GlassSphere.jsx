@@ -16,18 +16,18 @@ export default function GlassSphere() {
   return (
     <>
       {/* Outer sphere */}
-      <mesh>
+      <mesh castShadow recieveShadow>
         <sphereGeometry args={[2, 64, 64]} />
-        <MeshTransmissionMaterial {...materialProps} />
+        <MeshTransmissionMaterial {...materialProps} color="white" />
       </mesh>
 
       {/* Inner sphere */}
-      <mesh scale={0.8}>
+      <mesh scale={0.8} castShadow recieveShadow>
         <sphereGeometry args={[2, 64, 64]} />
         <MeshTransmissionMaterial
           {...materialProps}
           side={BackSide}
-          color="#87ceeb"
+          color="white"
         />
       </mesh>
     </>
