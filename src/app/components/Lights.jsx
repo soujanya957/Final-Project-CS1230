@@ -17,11 +17,11 @@ export default function Lights() {
       <spotLight
         ref={spotLightRef}
         position={[5, 7, 5]}
-        angle={0.5}
+        angle={0.2}
         penumbra={0.5}
         intensity={1.5}
       />
-      <directionalLight ref={dirLightRef} position={[-5, 5, 5]} intensity={1} />
+      <directionalLight ref={dirLightRef} position={[5, 5, 5]} intensity={1} />
     </>
   );
   {
