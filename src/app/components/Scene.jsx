@@ -9,6 +9,7 @@ import { TextureLoader } from "three/src/loaders/TextureLoader";
 
 import Table from "./Table";
 import Lights from "./Lights";
+import Terrain from "./Terrain";
 
 const Scene = () => {
   const orbitRef = useRef();
@@ -37,10 +38,13 @@ const Scene = () => {
           powerPreference: "high-performance",
         }}
       >
+        <gridHelper args={[10, 10]} />
+
         <Lights />
-        <primitive object={obj} scale={0.15} />
+        <primitive object={obj} scale={0.1} />
 
         <GlassSphere />
+        <Terrain />
         <Table />
         <OrbitControls ref={orbitRef} />
         {/* makes it crash :( */}
