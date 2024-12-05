@@ -64,7 +64,7 @@ const Scene = () => {
         <primitive object={obj} scale={0.1} />
         <primitive object={objRac} scale={0.01} />
 
-        {/* <GlassSphere /> */}
+        <GlassSphere />
         <Terrain />
         <Table />
         <OrbitControls ref={orbitRef} />
