@@ -22,14 +22,14 @@ export default function GlassSphere() {
       </mesh>
 
       {/* Inner sphere */}
-      <mesh scale={0.8} castShadow recieveShadow>
+      {/* <mesh scale={0.8} castShadow recieveShadow>
         <sphereGeometry args={[2, 64, 64]} />
         <MeshTransmissionMaterial
           {...materialProps}
           side={BackSide}
           color="white"
         />
-      </mesh>
+      </mesh> */}
     </>
   );
 }
