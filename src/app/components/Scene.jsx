@@ -10,6 +10,7 @@ import { TextureLoader } from "three/src/loaders/TextureLoader";
 import Table from "./Table";
 import Lights from "./Lights";
 import Terrain from "./Terrain";
+import Plant from "./Plant";
 
 const Scene = () => {
   const orbitRef = useRef();
@@ -38,9 +39,7 @@ const Scene = () => {
       mtl.materials["Giraffe_mat"].needsUpdate = true;
     }
     const RactextureLoader = new TextureLoader();
-    const textureRac = RactextureLoader.load(
-      "/models/Racoon/Raccoon_BaseColor.png"
-    );
+    const textureRac = RactextureLoader.load("/models/Raccoon/Raccoon.png");
     if (mtlRac.materials["lambert2SG"]) {
       mtlRac.materials["lambert2SG"].map = textureRac;
       mtlRac.materials["lambert2SG"].needsUpdate = true;
@@ -64,9 +63,12 @@ const Scene = () => {
         <primitive object={obj} scale={0.1} />
         <primitive object={objRac} scale={0.01} />
 
-        <GlassSphere />
+        <Plant iterations={2} x={-1} y={0} z={-1} />
+        <Plant iterations={3} x={1} y={0} z={1} />
+        <Plant iterations={1} x={0} y={0} z={1} />
+        {/* <GlassSphere />
         <Terrain />
-        <Table />
+        <Table /> */}
         <OrbitControls ref={orbitRef} />
         {/* makes it crash :( */}
         {/* <Environment files={"/studio.exr"} /> */}
