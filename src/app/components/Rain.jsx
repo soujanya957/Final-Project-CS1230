@@ -48,7 +48,7 @@ export default function Rain() {
         updateRain(rainArray);
 
         // Only update the position attribute if it exists
-        if (rainref.current.geometry.attributes.position) {
+        if (rainref.current.geometry.attributes) {
             rainref.current.geometry.attributes.position.needsUpdate = true;
         }
     }
