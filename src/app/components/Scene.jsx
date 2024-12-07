@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { Canvas, useLoader } from "@react-three/fiber";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, Environment } from "@react-three/drei";
 import { Leva } from "leva";
 import GlassSphere from "./GlassSphere";
 import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader";
@@ -59,23 +59,19 @@ const Scene = () => {
         }}
       >
         {/* <gridHelper args={[10, 10]} /> */}
+        <Environment preset="sunset" background />
 
         <Lights />
-        <primitive object={obj} scale={0.1} />
-        <primitive
-          object={objRac}
-          scale={0.01}
-          material={mtlRac.materials["lambert2SG"]}
-        />
+        <primitive object={obj} scale={0.1} castShadow receiveShadow />
 
-        <Plant iterations={2} x={-1} y={-1} z={-1} />
-        <Plant iterations={3} x={1} y={-1} z={1} u={0.1} />
-        <Plant iterations={1} x={0} y={-1} z={1} />
+        <Plant iterations={2} x={-1} y={0} z={-1} />
+        <Plant iterations={3} x={1} y={0} z={1} u={0.1} />
+        <Plant iterations={1} x={0} y={0} z={1} />
         {/* <GlassSphere /> */}
 
-        <Table />
-        <GlassSphere />
-        <Rain />
+        <Table position={[0, -4, 0]} castShadow receiveShadow />
+        <GlassSphere position={[0, 1, 0]} />
+        {/* <Rain /> */}
 
         <OrbitControls ref={orbitRef} />
         {/* makes it crash :( */}

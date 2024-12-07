@@ -4,7 +4,9 @@ import { useControls } from "leva";
 import Terrain from "./Terrain";
 
 export default function GlassSphere({ position }) {
+  // control radius of glass sphere and terrain inside
   const radius = 3;
+
   // Control parameters for glass material properties
   const materialProps = useControls("Glass Material", {
     thickness: { value: 0.2, min: 0, max: 5, step: 0.1 }, // Control for glass thickness

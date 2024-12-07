@@ -2,6 +2,16 @@ import React, { useMemo } from "react";
 import * as THREE from "three";
 
 export default function Terrain({ resolution = 100, radius }) {
+  const grassTexture = useMemo(() => {
+    const loader = new THREE.TextureLoader();
+    return loader.load(
+      "/textures/grass.jpg",
+      () => console.log("Texture loaded"),
+      undefined,
+      (err) => console.error("Texture load error", err)
+    );
+  }, []);
+
   function interpolate(A, B, alpha) {
     return A + (3 * alpha ** 2 - 2 * alpha ** 3) * (B - A);
   }
@@ -38,6 +48,7 @@ export default function Terrain({ resolution = 100, radius }) {
     const normals = [];
     const colors = [];
     const indices = [];
+    const uvs = [];
 
     const getColor = (normal) => [
       Math.abs(normal[0]),
@@ -50,9 +61,8 @@ export default function Terrain({ resolution = 100, radius }) {
         const u = x / resolution;
         const v = y / resolution;
 
-        const height = computePerlin(u * 12, v * 12, randomVectors) * 0.05;
+        const height = computePerlin(u * 16, v * 16, randomVectors) * 0.05;
 
-        // Compute the position within a square
         let posX = (u - 0.5) * 2 * radius;
         let posY = height * radius;
         let posZ = (v - 0.5) * 2 * radius;
@@ -60,7 +70,6 @@ export default function Terrain({ resolution = 100, radius }) {
         // Apply circular mask
         const distance = Math.sqrt(posX * posX + posZ * posZ);
         if (distance > radius) {
-          // Scale X and Z to fit within the circle
           const scale = radius / distance;
           posX *= scale;
           posZ *= scale;
@@ -68,12 +77,14 @@ export default function Terrain({ resolution = 100, radius }) {
 
         positions.push(posX, posY, posZ);
 
-        // Calculate normals
-        const normal = [0, 1, 0]; // Flat normal for now
+        const normal = [0, 1, 0];
         normals.push(...normal);
 
         const color = getColor(normal);
         colors.push(...color);
+
+        // Add UV coordinates
+        uvs.push(u, v);
 
         // Add indices for triangles
         if (x < resolution && y < resolution) {
@@ -87,8 +98,7 @@ export default function Terrain({ resolution = 100, radius }) {
         }
       }
     }
-
-    return { positions, normals, colors, indices };
+    return { positions, normals, colors, indices, uvs };
   }
 
   const terrainData = useMemo(() => {
@@ -122,6 +132,10 @@ export default function Terrain({ resolution = 100, radius }) {
       new THREE.BufferAttribute(new Float32Array(terrainData.normals), 3)
     );
     geom.setAttribute(
+      "uv",
+      new THREE.BufferAttribute(new Float32Array(terrainData.uvs), 2)
+    );
+    geom.setAttribute(
       "color",
       new THREE.BufferAttribute(new Float32Array(terrainData.colors), 3)
     );
@@ -152,9 +166,10 @@ export default function Terrain({ resolution = 100, radius }) {
       />
       </bufferGeometry> */}
         <meshPhongMaterial
-          vertexColors={true}
+          map={grassTexture}
+          vertexColors={false}
           wireframe={false}
-          flatShading={true}
+          flatShading={false}
         />
       </mesh>
     </>
