@@ -77,9 +77,9 @@ const Scene = () => {
         {/* <GlassSphere /> */}
         <Terrain />
 
-        <Table castShadow receiveShadow/>
+        <Table position={[0, -4, 0]} castShadow receiveShadow/>
         <GlassSphere position={[0, 1, 0]}/>
-        {/* <Rain /> */}
+        <Rain />
 
         <OrbitControls ref={orbitRef} />
         {/* makes it crash :( */}
