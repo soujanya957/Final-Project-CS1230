@@ -5,20 +5,28 @@ import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
 
-// L-System Rules and Parameters
 function generateLSystem({ axiom, rules, iterations }) {
   let current = axiom;
   for (let i = 0; i < iterations; i++) {
+    //for each iteration
     let next = "";
     for (let char of current) {
-      next += rules[char] || char;
+      next += rules[char] || char; //add rule for each char in axiom to next
     }
     current = next;
   }
   return current;
 }
 
-export default function Plant({ iterations, theta = 25, scale = 1, x, y, z }) {
+export default function Plant({
+  iterations,
+  theta = 25,
+  scale = 1,
+  u = 0.2,
+  x,
+  y,
+  z,
+}) {
   const mtl = useLoader(MTLLoader, "/models/branch/PUSHILIN_Tree_branch.mtl");
   const obj = useLoader(
     OBJLoader,
@@ -54,55 +62,55 @@ export default function Plant({ iterations, theta = 25, scale = 1, x, y, z }) {
 
   const drawPlant = () => {
     const transforms = [];
-    const stack = []; // Stack to save transformations
+    const stack = [];
     let currentTransform = {
-      position: new THREE.Vector3(0, 0, 0), // Start at the origin
-      rotation: new THREE.Euler(0, 0, 0), // No initial rotation
+      position: new THREE.Vector3(0, 0, 0), // origin
+      rotation: new THREE.Euler(0, 0, 0),
     };
 
     for (let char of branches) {
+      const rad = THREE.MathUtils.degToRad(theta);
       if (char === "F") {
         // Move forward and create a branch
-        const direction = new THREE.Vector3(0, scale, 0); // Upward by `scale`
-        direction.applyEuler(currentTransform.rotation); // Apply rotation to direction
+        const direction = new THREE.Vector3(0, scale, 0); // move up by scale
+        direction.applyEuler(currentTransform.rotation); // apply euler transform
 
-        const newPosition = currentTransform.position.clone().add(direction); // Calculate new position
+        const newPosition = currentTransform.position.clone().add(direction); // new position = cur pos + dir
 
-        // Add a branch with the current transform
+        // add branch w current transform
         transforms.push({
           position: newPosition.clone(),
           rotation: currentTransform.rotation.clone(),
           scale: new THREE.Vector3(scale, scale, scale),
         });
 
-        // Update current position to the new position
         currentTransform.position.copy(newPosition);
       } else if (char === "+") {
-        // Rotate clockwise around the Z-axis
-        currentTransform.rotation.z -= THREE.MathUtils.degToRad(theta);
+        //cc around z
+        currentTransform.rotation.z -= rad;
       } else if (char === "-") {
-        // Rotate counterclockwise around the Z-axis
-        currentTransform.rotation.z += THREE.MathUtils.degToRad(theta);
+        //ccw around z
+        currentTransform.rotation.z += rad;
       } else if (char === "&") {
-        // Rotate downward around the X-axis (pitch down)
-        currentTransform.rotation.x += THREE.MathUtils.degToRad(theta);
+        //down around x
+        currentTransform.rotation.x += rad;
       } else if (char === "^") {
-        // Rotate upward around the X-axis (pitch up)
-        currentTransform.rotation.x -= THREE.MathUtils.degToRad(theta);
+        //up around x
+        currentTransform.rotation.x -= rad;
       } else if (char === "/") {
-        // Rotate clockwise around the Y-axis (yaw right)
-        currentTransform.rotation.y -= THREE.MathUtils.degToRad(theta);
-      } else if (char === "\\") {
-        // Rotate counterclockwise around the Y-axis (yaw left)
-        currentTransform.rotation.y += THREE.MathUtils.degToRad(theta);
+        //cw around y
+        currentTransform.rotation.y -= rad;
+      } else if (char === "$") {
+        //ccw around y
+        currentTransform.rotation.y += rad;
       } else if (char === "[") {
-        // Save the current state
+        // Save curr state
         stack.push({
           position: currentTransform.position.clone(),
           rotation: currentTransform.rotation.clone(),
         });
       } else if (char === "]") {
-        // Restore the previous state
+        // Restore prev state
         const savedTransform = stack.pop();
         currentTransform.position.copy(savedTransform.position);
         currentTransform.rotation.copy(savedTransform.rotation);
@@ -115,7 +123,7 @@ export default function Plant({ iterations, theta = 25, scale = 1, x, y, z }) {
   const transforms = drawPlant();
 
   return (
-    <group ref={groupRef} scale={[0.2, 0.2, 0.2]} position={[x, y, z]}>
+    <group ref={groupRef} scale={[u, u, u]} position={[x, y, z]}>
       {transforms.map((transform, idx) => (
         <mesh
           key={idx}
@@ -123,9 +131,8 @@ export default function Plant({ iterations, theta = 25, scale = 1, x, y, z }) {
           position={transform.position}
           rotation={transform.rotation}
           scale={transform.scale}
-        >
-          {/* <meshStandardMaterial color="brown" /> */}
-        </mesh>
+          material={mtl.materials["a"]}
+        ></mesh>
       ))}
     </group>
   );

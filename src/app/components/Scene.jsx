@@ -61,14 +61,18 @@ const Scene = () => {
 
         <Lights />
         <primitive object={obj} scale={0.1} />
-        <primitive object={objRac} scale={0.01} />
+        <primitive
+          object={objRac}
+          scale={0.01}
+          material={mtlRac.materials["lambert2SG"]}
+        />
 
         <Plant iterations={2} x={-1} y={0} z={-1} />
-        <Plant iterations={3} x={1} y={0} z={1} />
+        <Plant iterations={3} x={1} y={0} z={1} u={0.1} />
         <Plant iterations={1} x={0} y={0} z={1} />
-        {/* <GlassSphere />
+        {/* <GlassSphere /> */}
         <Terrain />
-        <Table /> */}
+        <Table />
         <OrbitControls ref={orbitRef} />
         {/* makes it crash :( */}
         {/* <Environment files={"/studio.exr"} /> */}
