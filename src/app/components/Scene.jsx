@@ -11,6 +11,7 @@ import Table from "./Table";
 import Lights from "./Lights";
 import Terrain from "./Terrain";
 import Plant from "./Plant";
+import Rain from "./Rain";
 
 const Scene = () => {
   const orbitRef = useRef();
@@ -72,7 +73,11 @@ const Scene = () => {
         <Plant iterations={1} x={0} y={0} z={1} />
         {/* <GlassSphere /> */}
         <Terrain />
+
         <Table />
+        <GlassSphere />
+        <Rain />
+
         <OrbitControls ref={orbitRef} />
         {/* makes it crash :( */}
         {/* <Environment files={"/studio.exr"} /> */}
