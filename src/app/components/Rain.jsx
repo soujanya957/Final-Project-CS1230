@@ -56,7 +56,7 @@ export default function Rain() {
   });
 
   return (
-    <points ref = {rainref} position={[-1.5, -10, -1.5]} castShadow receiveShadow>
+    <points ref = {rainref} position={[-1.5, -10, -1.5]} >
       
       <pointsMaterial size={0.05} map={texture} transparent={true}/>
     </points>

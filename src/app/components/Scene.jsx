@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { Canvas, useLoader } from "@react-three/fiber";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
-import { OrbitControls, Environment} from "@react-three/drei";
+import { OrbitControls, Environment } from "@react-three/drei";
 import { Leva } from "leva";
 import GlassSphere from "./GlassSphere";
 import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader";
@@ -12,6 +12,7 @@ import Lights from "./Lights";
 import Terrain from "./Terrain";
 import Plant from "./Plant";
 import Rain from "./Rain";
+import Clock from "./Clock";
 
 const Scene = () => {
   const orbitRef = useRef();
@@ -62,9 +63,7 @@ const Scene = () => {
         <Environment preset="sunset" background />
 
         <Lights />
-        <primitive object={obj} scale={0.1} 
-        castShadow
-        receiveShadow/>
+        <primitive object={obj} scale={0.1} castShadow receiveShadow />
         <primitive
           object={objRac}
           scale={0.01}
@@ -77,9 +76,16 @@ const Scene = () => {
         {/* <GlassSphere /> */}
         <Terrain />
 
-        <Table position={[0, -4, 0]} castShadow receiveShadow/>
-        <GlassSphere position={[0, 1, 0]}/>
+        <Table position={[0, -6, 0]} castShadow receiveShadow />
+        <GlassSphere position={[0, 1, 0]} />
         <Rain />
+
+        {/* Clock */}
+        <Clock
+          position={[5, -0.55, 0]}
+          rotation={[0, -Math.PI / 2, Math.PI / 10]} // Rotate 45 degrees around Y-axis
+          castShadow={true} // Ensure shadows are cast
+        />
 
         <OrbitControls ref={orbitRef} />
         {/* makes it crash :( */}
