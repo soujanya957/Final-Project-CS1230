@@ -1,8 +1,7 @@
 import React, { useRef } from "react";
-import { Canvas, useLoader } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 
-import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
-import { OrbitControls, Environment } from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
 
 import { Leva } from "leva";
 import GlassSphere from "./GlassSphere";
