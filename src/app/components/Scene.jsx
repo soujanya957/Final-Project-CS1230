@@ -1,52 +1,18 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import { Canvas, useLoader } from "@react-three/fiber";
-import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import { OrbitControls } from "@react-three/drei";
 import { Leva } from "leva";
 import GlassSphere from "./GlassSphere";
-import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader";
-import { TextureLoader } from "three/src/loaders/TextureLoader";
 
 import Table from "./Table";
 import Lights from "./Lights";
 import Terrain from "./Terrain";
 import Plant from "./Plant";
 import Rain from "./Rain";
+import Model from "./Model";
 
 const Scene = () => {
   const orbitRef = useRef();
-
-  const mtl = useLoader(MTLLoader, "/models/Giraffe.mtl");
-  const obj = useLoader(OBJLoader, "/models/Giraffe.obj", (loader) => {
-    mtl.preload();
-    loader.setMaterials(mtl);
-  });
-
-  const mtlRac = useLoader(MTLLoader, "/models/Raccoon/Mesh_Raccoon.mtl");
-  const objRac = useLoader(
-    OBJLoader,
-    "/models/Raccoon/Mesh_Raccoon.obj",
-    (loader) => {
-      mtlRac.preload();
-      loader.setMaterials(mtlRac);
-    }
-  );
-
-  useEffect(() => {
-    const textureLoader = new TextureLoader();
-    const texture = textureLoader.load("/models/Giraffe_BaseColor.png");
-    if (mtl.materials["Giraffe_mat"]) {
-      mtl.materials["Giraffe_mat"].map = texture;
-      mtl.materials["Giraffe_mat"].needsUpdate = true;
-    }
-    const RactextureLoader = new TextureLoader();
-    const textureRac = RactextureLoader.load("/models/Raccoon/Raccoon.png");
-    if (mtlRac.materials["lambert2SG"]) {
-      mtlRac.materials["lambert2SG"].map = textureRac;
-      mtlRac.materials["lambert2SG"].needsUpdate = true;
-    }
-    console.log(mtlRac.materials);
-  }, [mtl, mtlRac]);
 
   return (
     <>
@@ -61,11 +27,28 @@ const Scene = () => {
         {/* <gridHelper args={[10, 10]} /> */}
 
         <Lights />
-        <primitive object={obj} scale={0.1} />
-        <primitive
-          object={objRac}
-          scale={0.01}
-          material={mtlRac.materials["lambert2SG"]}
+        {/* GIRAFFE */}
+        <Model
+          objpath={"/models/Giraffe.obj"}
+          mtlpath={"/models/Giraffe.mtl"}
+          texpath={"/models/Giraffe_BaseColor.png"}
+          mat={"Giraffe_mat"}
+          u={0.1}
+          x={1}
+          y={0}
+          z={-1}
+        />
+
+        {/* Sheep */}
+        <Model
+          objpath={"/models/Sheep/Sheep.obj"}
+          mtlpath={"/models/Sheep/Sheep.mtl"}
+          texpath={"/models/Sheep/Sheep_BaseColor.png"}
+          mat={"Sheep_mat"}
+          u={0.1}
+          x={-1}
+          y={0}
+          z={1}
         />
 
         <Plant iterations={2} x={-1} y={0} z={-1} />
@@ -75,7 +58,7 @@ const Scene = () => {
         <Terrain />
 
         <Table />
-        <GlassSphere />
+        {/* <GlassSphere /> */}
         <Rain />
 
         <OrbitControls ref={orbitRef} />
