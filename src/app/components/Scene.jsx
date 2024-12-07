@@ -1,7 +1,8 @@
 import React, { useRef } from "react";
-import { Canvas } from "@react-three/fiber";
 
+import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, Environment } from "@react-three/drei";
 
 import { Leva } from "leva";
 import GlassSphere from "./GlassSphere";
@@ -12,6 +13,7 @@ import Terrain from "./Terrain";
 import Plant from "./Plant";
 import Rain from "./Rain";
 import Model from "./Model";
+import Clock from "./Clock";
 
 const Scene = () => {
   const orbitRef = useRef();
@@ -26,8 +28,8 @@ const Scene = () => {
           powerPreference: "high-performance",
         }}
       >
-        {/* <gridHelper args={[10, 10]} /> */}
-        {/* <Environment preset="sunset" background /> */}
+        {<gridHelper args={[10, 10]} />}
+        {<Environment preset="sunset" background />}
 
         <Lights />
 
@@ -58,14 +60,20 @@ const Scene = () => {
         <Plant iterations={2} x={-1} y={0} z={-1} />
         <Plant iterations={3} x={1} y={0} z={1} u={0.1} />
         <Plant iterations={1} x={0} y={0} z={1} />
-        {/* <GlassSphere /> */}
 
         <Table position={[0, -4, 0]} castShadow receiveShadow />
         <GlassSphere position={[0, 1, 0]} />
 
+        <Table position={[0, -6, 0]} castShadow receiveShadow />
+        <GlassSphere position={[0, 1, 0]} />
         <Rain />
 
-        {/* <Rain /> */}
+        {/* Clock */}
+        <Clock
+          position={[5, -0.55, 0]}
+          rotation={[0, -Math.PI / 2, Math.PI / 10]} // Rotate 45 degrees around Y-axis
+          castShadow={true} // Ensure shadows are cast
+        />
 
         <OrbitControls ref={orbitRef} />
         {/* makes it crash :( */}
