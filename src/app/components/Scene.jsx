@@ -1,6 +1,9 @@
 import React, { useRef } from "react";
 import { Canvas, useLoader } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+
+import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
+import { OrbitControls, Environment } from "@react-three/drei";
+
 import { Leva } from "leva";
 import GlassSphere from "./GlassSphere";
 
@@ -25,8 +28,10 @@ const Scene = () => {
         }}
       >
         {/* <gridHelper args={[10, 10]} /> */}
+        <Environment preset="sunset" background />
 
         <Lights />
+
         {/* GIRAFFE */}
         <Model
           objpath={"/models/Giraffe.obj"}
@@ -57,8 +62,9 @@ const Scene = () => {
         {/* <GlassSphere /> */}
         <Terrain />
 
-        <Table />
-        {/* <GlassSphere /> */}
+        <Table position={[0, -4, 0]} castShadow receiveShadow />
+        <GlassSphere position={[0, 1, 0]} />
+
         <Rain />
 
         <OrbitControls ref={orbitRef} />
