@@ -1,8 +1,12 @@
 import React from "react";
 import { MeshTransmissionMaterial } from "@react-three/drei";
 import { useControls } from "leva";
+import Terrain from "./Terrain";
 
 export default function GlassSphere({ position }) {
+  // control radius of glass sphere and terrain inside
+  const radius = 3;
+
   // Control parameters for glass material properties
   const materialProps = useControls("Glass Material", {
     thickness: { value: 0.2, min: 0, max: 5, step: 0.1 }, // Control for glass thickness
@@ -22,7 +26,7 @@ export default function GlassSphere({ position }) {
     <group position={position}>
       {/* Outer glass sphere */}
       <mesh castShadow receiveShadow>
-        <sphereGeometry args={[3, 64, 64]} />
+        <sphereGeometry args={[radius, 64, 64]} />
         <MeshTransmissionMaterial
           {...materialProps}
           color="white"
@@ -44,6 +48,7 @@ export default function GlassSphere({ position }) {
           backside={false} // Disable backside rendering for the inner layer
         />
       </mesh>
+      <Terrain radius={radius} />
     </group>
   );
 }
