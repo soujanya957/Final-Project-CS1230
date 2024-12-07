@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { Canvas, useLoader } from "@react-three/fiber";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, Environment} from "@react-three/drei";
 import { Leva } from "leva";
 import GlassSphere from "./GlassSphere";
 import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader";
@@ -59,9 +59,12 @@ const Scene = () => {
         }}
       >
         {/* <gridHelper args={[10, 10]} /> */}
+        <Environment preset="sunset" background />
 
         <Lights />
-        <primitive object={obj} scale={0.1} />
+        <primitive object={obj} scale={0.1} 
+        castShadow
+        receiveShadow/>
         <primitive
           object={objRac}
           scale={0.01}
@@ -74,9 +77,9 @@ const Scene = () => {
         {/* <GlassSphere /> */}
         <Terrain />
 
-        <Table />
-        <GlassSphere />
-        <Rain />
+        <Table castShadow receiveShadow/>
+        <GlassSphere position={[0, 1, 0]}/>
+        {/* <Rain /> */}
 
         <OrbitControls ref={orbitRef} />
         {/* makes it crash :( */}
