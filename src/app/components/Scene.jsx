@@ -27,8 +27,8 @@ const Scene = () => {
           powerPreference: "high-performance",
         }}
       >
-        {/* <gridHelper args={[10, 10]} /> */}
-        {/* <Environment preset="sunset" background /> */}
+        { <gridHelper args={[10, 10]} /> }
+        { <Environment preset="sunset" background /> }
 
         <Lights />
 
@@ -59,14 +59,11 @@ const Scene = () => {
         <Plant iterations={2} x={-1} y={0} z={-1} />
         <Plant iterations={3} x={1} y={0} z={1} u={0.1} />
         <Plant iterations={1} x={0} y={0} z={1} />
-        {/* <GlassSphere /> */}
 
         <Table position={[0, -4, 0]} castShadow receiveShadow />
         <GlassSphere position={[0, 1, 0]} />
 
         <Rain />
-
-        {/* <Rain /> */}
 
         <OrbitControls ref={orbitRef} />
         {/* makes it crash :( */}
