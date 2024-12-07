@@ -28,7 +28,7 @@ const Scene = () => {
         }}
       >
         {/* <gridHelper args={[10, 10]} /> */}
-        <Environment preset="sunset" background />
+        {/* <Environment preset="sunset" background /> */}
 
         <Lights />
 
