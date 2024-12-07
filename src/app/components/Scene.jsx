@@ -68,11 +68,10 @@ const Scene = () => {
           material={mtlRac.materials["lambert2SG"]}
         />
 
-        <Plant iterations={2} x={-1} y={0} z={-1} />
-        <Plant iterations={3} x={1} y={0} z={1} u={0.1} />
-        <Plant iterations={1} x={0} y={0} z={1} />
+        <Plant iterations={2} x={-1} y={-1} z={-1} />
+        <Plant iterations={3} x={1} y={-1} z={1} u={0.1} />
+        <Plant iterations={1} x={0} y={-1} z={1} />
         {/* <GlassSphere /> */}
-        <Terrain />
 
         <Table />
         <GlassSphere />
