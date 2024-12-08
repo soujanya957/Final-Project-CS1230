@@ -31,25 +31,25 @@ const PointLamp = ({ position = [0, 0, 0] }) => {
     lightIntensity,
     colorTemperature
   } = useControls('Desk Lamp', {
-    // Restricted Head Rotations 
+    // Default Head Rotations 
     headRotationX: { 
-      value: 0, 
-      min: -Math.PI/4, // Limited to 45 degrees down
-      max: Math.PI/4,  // Limited to 45 degrees up
+      value: -0.9, 
+      min: -Math.PI / 2, // Increased limit to 90 degrees down
+      max: Math.PI / 4,  // Limited to 45 degrees up
       step: 0.05 
     },
     headRotationY: { 
-      value: 0, 
-      min: -Math.PI/3,  // Limited to about 60 degrees left
-      max: Math.PI/3,   // Limited to about 60 degrees right
+      value: -0.5, // Set to 0 to face the front
+      min: -Math.PI,  // Increased limit to 180 degrees left
+      max: Math.PI,   // Increased limit to 180 degrees right
       step: 0.05 
     },
     
     // Light Properties
     lightIntensity: { 
-      value: 10, 
+      value: 50,  // Set to default intensity of 30
       min: 0, 
-      max: 50, 
+      max: 200, 
       step: 0.5 
     },
     // Color temperature slider
@@ -72,7 +72,7 @@ const PointLamp = ({ position = [0, 0, 0] }) => {
   }, [colorTemperature]);
 
   return (
-    <group position={position} scale={2.5}>
+    <group position={position} rotation={[0, Math.PI, 0]} scale={2.5}>
       {/* Solid Base (Now Fixed) */}
       <group>
         <mesh castShadow>
@@ -87,27 +87,27 @@ const PointLamp = ({ position = [0, 0, 0] }) => {
             <meshStandardMaterial color="#505050" roughness={0.5} metalness={0.7} />
           </mesh>
 
-          {/* Arm */}
-          <group position={[0, 0.75, 0]}>
+          {/* Arm (Now Fixed) */}
+          <group position={[0, 1.5, 0]}> {/* Adjusted height */}
             <mesh rotation={[Math.PI, 0, 0]} castShadow>
-              <cylinderGeometry args={[0.05, 0.05, 1.75, 64]} />
+              <cylinderGeometry args={[0.05, 0.05, 3.5, 64]} />
               <meshStandardMaterial color="#606060" roughness={0.6} metalness={0.7} />
             </mesh>
 
             {/* Lamp Head with Controlled Rotational Control */}
             <group 
               ref={headRef} 
-              position={[0, 1, 0]}
+              position={[0, 2, 0]}
               rotation={[headRotationX, headRotationY, 0]}
             >
               {/* Longer Lamp Shade */}
-              <mesh rotation={[-Math.PI/2, 0, 0]} castShadow>
+              <mesh rotation={[Math.PI / 2, 0, 0]} castShadow>
                 <cylinderGeometry args={[0.3, 0.4, 0.8, 64]} />
                 <meshStandardMaterial color="#E0E0E0" opacity={0.9} />
               </mesh>
 
               {/* Bulb Area */}
-              <mesh position={[0, 0, 0.4]}>
+              <mesh position={[0, 0, -0.4]}>
                 <sphereGeometry args={[0.1, 32, 32]} />
                 <meshStandardMaterial 
                   color="#FFFF00" 
@@ -119,13 +119,13 @@ const PointLamp = ({ position = [0, 0, 0] }) => {
               {/* Target for Precise Light Direction */}
               <object3D 
                 ref={targetRef} 
-                position={[0, 0, 5]} 
+                position={[0, 0, -5]} 
               />
 
               {/* Spot Light with Dynamic Targeting and Color */}
               <spotLight
                 ref={lightRef}
-                position={[0, 0, 0.5]}
+                position={[0, 0, -0.5]}
                 target={targetRef.current}
                 angle={Math.PI / 4}
                 penumbra={0.5}
