@@ -26,7 +26,7 @@ export default function GlassSphere({ position }) {
     <group position={position}>
       {/* Outer glass sphere */}
       <mesh castShadow receiveShadow>
-        <sphereGeometry args={[radius, 64, 64]} />
+        <sphereGeometry args={[3, 64, 64]} />
         <MeshTransmissionMaterial
           {...materialProps}
           color="white"
@@ -46,6 +46,7 @@ export default function GlassSphere({ position }) {
           transparent
           opacity={0.0} // Make the inner sphere invisible
           backside={false} // Disable backside rendering for the inner layer
+          depthWrite={false} // Disable depth writing for the inner layer
         />
       </mesh>
       <Terrain radius={radius} />
