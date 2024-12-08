@@ -23,6 +23,8 @@ export default function Model({ mtlpath, objpath, texpath, mat, u, x, y, z }) {
   return (
     <group position={[x, y, z]}>
       <mesh
+        castShadow
+        receiveShadow
         geometry={obj.children[0].geometry}
         scale={u}
         material={mtl.materials[mat]}
