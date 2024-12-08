@@ -17,6 +17,7 @@ import Model from "./Model";
 import Clock from "./Clock";
 import GlassBowlStand from "./GlassBowlStand";
 import DeskLamp from "./DeskLamp";
+import PointLamp from "./PointerLamp";
 
 const Scene = () => {
   const orbitRef = useRef();
@@ -50,7 +51,8 @@ const Scene = () => {
 
         <DeskLamp position={[-5, -3.125, -2]} />
         {/* Secondary Desk Lamp if the scene is not brough enough*/} 
-        <DeskLamp position={[5, -3.125, -2]} />
+        <PointLamp position={[5, -3.125, -3]} />
+
         {<gridHelper args={[10, 10]} />}
 
         {/* Terrarium Focused Components} */}

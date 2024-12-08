@@ -1,7 +1,42 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useRef } from "react";
+import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
-export default function Terrain({ resolution = 100, radius }) {
+/**
+ * Water Component
+ */
+function Water({ position, size = [5, 5], waveSpeed = 0.1 }) {
+  const waterRef = useRef();
+
+  useFrame(({ clock }) => {
+    const time = clock.getElapsedTime();
+    const geometry = waterRef.current.geometry;
+    const positions = geometry.attributes.position.array;
+    for (let i = 0; i < positions.length; i += 3) {
+      positions[i + 2] = Math.sin(positions[i] * 0.3 + time * waveSpeed) * 0.2;
+    }
+    geometry.attributes.position.needsUpdate = true;
+  });
+
+  return (
+    <mesh position={position} ref={waterRef} rotation={[-Math.PI / 2, 0, 0]}>
+      <planeGeometry args={[size[0], size[1], 50, 50]} />
+      <meshPhysicalMaterial
+        color="#4fa4f6"
+        roughness={0.3}
+        metalness={0.5}
+        clearcoat={1}
+        transparent={true}
+        opacity={0.8}
+      />
+    </mesh>
+  );
+}
+
+/**
+ * Terrain Component
+ */
+function Terrain({ resolution = 100, radius }) {
   const grassTexture = useMemo(() => {
     const loader = new THREE.TextureLoader();
     return loader.load(
@@ -67,13 +102,17 @@ export default function Terrain({ resolution = 100, radius }) {
         let posY = height * radius;
         let posZ = (v - 0.5) * 2 * radius;
 
-        // Apply circular mask
+        // Apply circular mask and exclude pond area
         const distance = Math.sqrt(posX * posX + posZ * posZ);
+        const isPond = posX > 3 && posX < 5 && posZ < -3 && posZ > -5;
+
         if (distance > radius) {
           const scale = radius / distance;
           posX *= scale;
           posZ *= scale;
         }
+
+        if (isPond) posY = 0; // Flatten the pond area
 
         positions.push(posX, posY, posZ);
 
@@ -111,14 +150,8 @@ export default function Terrain({ resolution = 100, radius }) {
         ];
       }
     }
-    const data = generateTerrain(resolution, randomVectors, radius);
-
-    // console.log("Terrain Colors:", data.colors);
-    // console.log("Terrain Positions:", data.positions);
-    // console.log("Terrain Normals:", data.normals);
-
-    return data;
-  }, [resolution]);
+    return generateTerrain(resolution, randomVectors, radius);
+  }, [resolution, radius]);
 
   // Create BufferGeometry and attach attributes
   const geometry = useMemo(() => {
@@ -146,32 +179,25 @@ export default function Terrain({ resolution = 100, radius }) {
   }, [terrainData]);
 
   return (
+    <mesh geometry={geometry} position={[0, -1, 0]} scale={[0.8, 0.8, 0.8]}>
+      <meshPhongMaterial
+        map={grassTexture}
+        vertexColors={false}
+        wireframe={false}
+        flatShading={false}
+      />
+    </mesh>
+  );
+}
+
+/**
+ * Main Component
+ */
+export default function TerrainWithPond() {
+  return (
     <>
-      <mesh geometry={geometry} position={[0, -1, 0]} scale={[0.8, 0.8, 0.8]}>
-        {/* <bufferGeometry> 
-      <bufferAttribute
-        attach="attributes-position"
-        array={new Float32Array(terrainData.positions)}
-        itemSize={3}
-      />
-      <bufferAttribute
-        attach="attributes-normal"
-        array={new Float32Array(terrainData.normals)}
-        itemSize={3}
-      />
-      <bufferAttribute
-        attach="attributes-color"
-        array={new Float32Array(terrainData.colors)}
-        itemSize={3}
-      />
-      </bufferGeometry> */}
-        <meshPhongMaterial
-          map={grassTexture}
-          vertexColors={false}
-          wireframe={false}
-          flatShading={false}
-        />
-      </mesh>
+      <Terrain resolution={100} radius={10} />
+      <Water position={[4, 0.2, -4]} size={[2, 2]} waveSpeed={0.2} />
     </>
   );
 }
