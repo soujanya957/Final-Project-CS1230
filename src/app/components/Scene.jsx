@@ -38,7 +38,7 @@ const Scene = () => {
           powerPreference: "high-performance",
         }}
       >
-        {<Environment preset="sunset" background />}
+        {/* {<Environment preset="sunset" background />} */}
         <Lights position={[0, 6, 10]} />
         <Table position={[0, -7.5, 0]} castShadow receiveShadow />
         <Clock
@@ -53,6 +53,7 @@ const Scene = () => {
         {<gridHelper args={[10, 10]} />}
 
         {/* Terrarium Focused Components} */}
+
         <GlassSphere position={[0, 1, 0]} />
         <GlassBowlStand position={[0, -2, 0]} castShadow receiveShadow />
         <Rain />
@@ -108,8 +109,6 @@ const Scene = () => {
         {/* <Plant iterations={5} x={-1} y={0} z={-1} u={0.1} /> */}
         <Plant iterations={1} x={0} y={0} z={1} u={0.1} />
 
-        <Table position={[0, -6, 0]} castShadow receiveShadow />
-        <GlassSphere position={[0, 1, 0]} />
         <Rain />
 
         <Clock
