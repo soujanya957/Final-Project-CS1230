@@ -8,25 +8,23 @@ export default function Rain({ position, radius }) {
   const rainref = useRef();
   const [rainArray] = useState(new Float32Array(num_rain * 3));
 
-  const texture = new THREE.TextureLoader().load(
-    "/textures/raindrop.png"
-  );
+  const texture = new THREE.TextureLoader().load("/textures/raindrop.png");
 
   // Function to initialize rain particles
   const initializeRain = (rainArray) => {
     for (let i = 0; i < num_rain; i++) {
       // Generate random angle and distance within the circular radius
-        const angle = Math.random() * 2 * Math.PI; // Random angle (0 to 2π)
-        const distance = Math.sqrt(Math.random()) * radius; // Random distance within radius
-        
-        // Convert polar coordinates to Cartesian coordinates
-        const x = Math.cos(angle) * distance;
-        const z = Math.sin(angle) * distance;
+      const angle = Math.random() * 2 * Math.PI; // Random angle (0 to 2π)
+      const distance = Math.sqrt(Math.random()) * radius; // Random distance within radius
 
-        // Set x, y, and z
-        rainArray[i * 3] = x; // x-coordinate
-        rainArray[i * 3 + 1] = Math.random() * 4 + 7; // y-coordinate (height, falling down)
-        rainArray[i * 3 + 2] = z; // z-coordinate
+      // Convert polar coordinates to Cartesian coordinates
+      const x = Math.cos(angle) * distance;
+      const z = Math.sin(angle) * distance;
+
+      // Set x, y, and z
+      rainArray[i * 3] = x; // x-coordinate
+      rainArray[i * 3 + 1] = Math.random() * 4 + 7; // y-coordinate (height, falling down)
+      rainArray[i * 3 + 2] = z; // z-coordinate
     }
   };
 
