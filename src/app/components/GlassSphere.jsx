@@ -51,7 +51,7 @@ export default function GlassSphere({ position }) {
         />
       </mesh>
       <Terrain radius={radius} />
-      <Rain position={position} radius={radius-0.5} />
+      <Rain position={position} radius={radius-1} />
     </group>
   );
 }
