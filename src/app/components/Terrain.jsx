@@ -148,7 +148,7 @@ export default function Terrain({ resolution = 100, radius }) {
   return (
     <>
       <mesh geometry={geometry} position={[0, -1, 0]} scale={[0.8, 0.8, 0.8]}>
-        {/* <bufferGeometry>
+        {/* <bufferGeometry> 
       <bufferAttribute
         attach="attributes-position"
         array={new Float32Array(terrainData.positions)}

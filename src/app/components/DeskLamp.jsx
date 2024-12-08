@@ -4,9 +4,9 @@ import { useControls } from 'leva';
 export default function DeskLamp({ position = [0, 0, 0] }) {
   const { brightness, lampColor } = useControls('Lamp', {
     brightness: {
-      value: 2,
+      value: 50,
       min: 0,
-      max: 100,
+      max: 250,
       step: 0.1,
       label: 'Light Intensity',
     },

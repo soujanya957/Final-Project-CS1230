@@ -50,7 +50,8 @@ export default function GlassSphere({ position }) {
           depthWrite={false} // Disable depth writing for the inner layer
         />
       </mesh>
-      <Terrain radius={radius} />
+      <Terrain radius={radius} castShadow
+      receiveShadow/>
       <Rain position={position} radius={radius-1} />
     </group>
   );
