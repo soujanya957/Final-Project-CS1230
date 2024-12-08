@@ -50,6 +50,11 @@ export default function GlassSphere({ position }) {
           depthWrite={false} // Disable depth writing for the inner layer
         />
       </mesh>
+      {/* Ambient light inside the sphere */}
+      <ambientLight
+        intensity={1} // Adjust intensity as needed
+        color={0xFFFFFF} // White light
+      />
       <Terrain radius={radius} castShadow
       receiveShadow/>
       <Rain position={position} radius={radius-1} />
