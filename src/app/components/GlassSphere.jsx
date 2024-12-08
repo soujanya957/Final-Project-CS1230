@@ -2,6 +2,7 @@ import React from "react";
 import { MeshTransmissionMaterial } from "@react-three/drei";
 import { useControls } from "leva";
 import Terrain from "./Terrain";
+import Rain from "./Rain";
 
 export default function GlassSphere({ position }) {
   // control radius of glass sphere and terrain inside
@@ -50,6 +51,7 @@ export default function GlassSphere({ position }) {
         />
       </mesh>
       <Terrain radius={radius} />
+      <Rain position={position} radius={radius-0.5} />
     </group>
   );
 }

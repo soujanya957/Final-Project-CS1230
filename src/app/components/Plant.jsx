@@ -27,26 +27,19 @@ export default function Plant({
   y,
   z,
 }) {
-  const mtl = useLoader(MTLLoader, "/models/branch/PUSHILIN_Tree_branch.mtl");
-  const obj = useLoader(
-    OBJLoader,
-    "/models/branch/PUSHILIN_Tree_branch.obj",
-    (loader) => {
-      mtl.preload();
-      loader.setMaterials(mtl);
-    }
-  );
+  const mtl = useLoader(MTLLoader, "/models/Vines/Vines.mtl");
+  const obj = useLoader(OBJLoader, "/models/Vines/Vines.obj", (loader) => {
+    mtl.preload();
+    loader.setMaterials(mtl);
+  });
 
   useEffect(() => {
     const textureLoader = new TextureLoader();
-    const texture = textureLoader.load(
-      "/models/branch/PUSHILIN_tree_branch.png"
-    );
-    if (mtl.materials["a"]) {
-      mtl.materials["a"].map = texture;
-      mtl.materials["a"].needsUpdate = true;
+    const texture = textureLoader.load("/models/Vines/Vines_BaseColor.png");
+    if (mtl.materials["Vines_mat"]) {
+      mtl.materials["Vines_mat"].map = texture;
+      mtl.materials["Vines_mat"].needsUpdate = true;
     }
-    console.log(mtl.materials);
   }, [mtl]);
 
   const branches = useMemo(() => {
@@ -131,7 +124,7 @@ export default function Plant({
           position={transform.position}
           rotation={transform.rotation}
           scale={transform.scale}
-          material={mtl.materials["a"]}
+          material={mtl.materials["Vines_mat"]}
         ></mesh>
       ))}
     </group>
