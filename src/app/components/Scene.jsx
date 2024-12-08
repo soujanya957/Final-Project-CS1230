@@ -56,7 +56,7 @@ const Scene = () => {
         {/* Terrarium Focused Components} */}
         <GlassSphere position={[0, 1, 0]} />
         <GlassBowlStand position={[0, -2, 0]} castShadow receiveShadow />
-        <Rain />
+        {/* <Rain position={[0,1,0]} /> */}
 
         <Plant iterations={2} x={-1} y={0} z={-1} />
         <Plant iterations={3} x={1} y={0} z={1} u={0.1} />

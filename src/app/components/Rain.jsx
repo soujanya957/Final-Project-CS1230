@@ -4,7 +4,7 @@ import { useFrame } from "@react-three/fiber";
 
 const num_rain = 150;
 
-export default function Rain() {
+export default function Rain({ position, radius }) {
   const rainref = useRef();
   const [rainArray] = useState(new Float32Array(num_rain * 3));
 
@@ -13,7 +13,7 @@ export default function Rain() {
   );
 
   // Function to initialize rain particles
-  const initializeRain = (rainArray, radius) => {
+  const initializeRain = (rainArray) => {
     for (let i = 0; i < num_rain; i++) {
       // Generate random angle and distance within the circular radius
         const angle = Math.random() * 2 * Math.PI; // Random angle (0 to 2π)
@@ -44,7 +44,7 @@ export default function Rain() {
   // Initialize the rain on component mount
   useEffect(() => {
     // Initialize rain positions only once
-    initializeRain(rainArray, 2.5);
+    initializeRain(rainArray);
 
     if (rainref.current) {
       rainref.current.geometry.setAttribute(
@@ -67,8 +67,8 @@ export default function Rain() {
   });
 
   return (
-    <points ref = {rainref} position={[-1.5, -10, -1.5]}>
-      <pointsMaterial size={0.05} map={texture} transparent={true}/>
+    <points ref = {rainref} position={[position[0],position[1]-12,position[2]]}>
+      <pointsMaterial size={0.07} map={texture} transparent={true}/>
     </points>
   );
 }
