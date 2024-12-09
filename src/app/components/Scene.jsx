@@ -59,7 +59,6 @@ const Scene = () => {
 
         <GlassSphere position={[0, 1, 0]} />
         <GlassBowlStand position={[0, -2, 0]} castShadow receiveShadow />
-        {/* <Rain position={[0,1,0]} /> */}
 
         {/* Giraffe */}
         <Model
