@@ -16,6 +16,7 @@ import Clock from "./Clock";
 import GlassBowlStand from "./GlassBowlStand";
 import DeskLamp from "./DeskLamp";
 import PointLamp from "./PointerLamp";
+import PlayerMovement from "./PlayerMovement"; 
 
 const Scene = () => {
   const orbitRef = useRef();
@@ -111,8 +112,6 @@ const Scene = () => {
         {/* <Plant iterations={5} x={-1} y={0} z={-1} u={0.1} /> */}
         <Plant iterations={1} x={0} y={0} z={1} u={0.1} />
 
-        {/* <Rain /> */}
-
         <Clock
           position={[5, -0.55, 0]}
           rotation={[0, -Math.PI / 2, Math.PI / 10]} // Rotate 45 degrees around Y-axis
@@ -120,6 +119,7 @@ const Scene = () => {
         />
 
         <OrbitControls ref={orbitRef} />
+        <PlayerMovement />
       </Canvas>
     </>
   );
