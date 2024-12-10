@@ -39,7 +39,7 @@ const Scene = () => {
           powerPreference: "high-performance",
         }}
       >
-        {<Environment preset="sunset" background />}
+        {/* {<Environment preset="sunset" background />} */}
         <Lights position={[0, 6, 10]} />
         <Table position={[0, -7.5, 0]} castShadow receiveShadow />
         <Clock
@@ -101,13 +101,13 @@ const Scene = () => {
 
         {/* Bunny */}
         <Model
-          objpath={"/models/Bunny/Bunny.obj"}
-          mtlpath={"/models/Bunny/Bunny.mtl"}
-          texpath={"/models/Bunny/BunnyColor.png"}
-          mat={"Giraffe_mat"}
-          u={1}
+          objpath={"/models/Rabbit/Mesh_Rabbit.obj"}
+          mtlpath={"/models/Rabbit/Mesh_Rabbit.mtl"}
+          texpath={"/models/Rabbit/Tex_Rabbit.png"}
+          mat={"initialShadingGroup"}
+          u={0.005}
           x={-1}
-          y={0}
+          y={0.2}
           z={-1}
         />
 
