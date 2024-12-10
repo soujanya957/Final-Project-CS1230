@@ -5,7 +5,7 @@ export default function Terrain({ resolution = 100, radius }) {
   const grassTexture = useMemo(() => {
     const loader = new THREE.TextureLoader();
     return loader.load(
-      "/textures/grass.jpeg",
+      "/textures/grass.png",
       () => console.log("Texture loaded"),
       undefined,
       (err) => console.error("Texture load error", err)
