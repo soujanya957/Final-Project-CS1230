@@ -154,7 +154,7 @@ export default function Plant({
         texpath={"/models/bucket/528 Bucket.png"}
         mat={"Mat"}
         x={transforms[0].position.x}
-        y={transforms[0].position.y - 1}
+        y={transforms[0].position.y - 1.5}
         z={transforms[0].position.z}
         u={0.05}
       />

@@ -16,6 +16,7 @@ import GlassBowlStand from "./GlassBowlStand";
 import DeskLamp from "./DeskLamp";
 import PointLamp from "./PointerLamp";
 import PlayerMovement from "./PlayerMovement";
+import Marigold from "./Marigold";
 
 const Scene = () => {
   const orbitRef = useRef();
@@ -99,7 +100,7 @@ const Scene = () => {
           z={0}
         />
 
-        {/* Bunny */}
+        {/* Rabbit */}
         <Model
           objpath={"/models/Rabbit/Mesh_Rabbit.obj"}
           mtlpath={"/models/Rabbit/Mesh_Rabbit.mtl"}
@@ -110,6 +111,8 @@ const Scene = () => {
           y={0.2}
           z={-1}
         />
+
+        <Marigold />
 
         <Plant iterations={2} x={0} y={0} z={2} u={0.1} />
         <Plant iterations={1} x={0} y={0} z={-2} u={0.1} />
