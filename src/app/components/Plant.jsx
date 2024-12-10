@@ -19,6 +19,7 @@ function generateLSystem({ axiom, rules, iterations }) {
 }
 
 export default function Plant({
+  rotate = 1,
   iterations,
   theta = 25,
   scale = 1,
@@ -92,10 +93,10 @@ export default function Plant({
         currentTransform.rotation.x -= rad;
       } else if (char === "/") {
         //cw around y
-        currentTransform.rotation.y -= rad;
+        currentTransform.rotation.y -= rad * rotate;
       } else if (char === "$") {
         //ccw around y
-        currentTransform.rotation.y += rad;
+        currentTransform.rotation.y += rad * rotate;
       } else if (char === "[") {
         // Save curr state
         stack.push({
