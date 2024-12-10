@@ -3,6 +3,7 @@ import { MeshTransmissionMaterial } from "@react-three/drei";
 import { useControls } from "leva";
 import Terrain from "./Terrain";
 import Rain from "./Rain";
+import * as THREE from "three";
 
 export default function GlassSphere({ position }) {
   // control radius of glass sphere and terrain inside
@@ -33,6 +34,7 @@ export default function GlassSphere({ position }) {
           color="white"
           attenuationDistance={10}
           attenuationColor="lightblue"
+          side={THREE.DoubleSide}
         />
       </mesh>
 
@@ -48,6 +50,7 @@ export default function GlassSphere({ position }) {
           opacity={0.0} // Make the inner sphere invisible
           backside={false} // Disable backside rendering for the inner layer
           depthWrite={false} // Disable depth writing for the inner layer
+          side={THREE.DoubleSide}
         />
       </mesh>
       {/* Ambient light inside the sphere */}

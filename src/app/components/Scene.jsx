@@ -10,7 +10,6 @@ import GlassSphere from "./GlassSphere";
 import Table from "./Table";
 import Lights from "./Lights";
 import Plant from "./Plant";
-import Rain from "./Rain";
 import Model from "./Model";
 import Clock from "./Clock";
 import GlassBowlStand from "./GlassBowlStand";
@@ -40,7 +39,7 @@ const Scene = () => {
           powerPreference: "high-performance",
         }}
       >
-        {/* {<Environment preset="sunset" background />} */}
+        {<Environment preset="sunset" background />}
         <Lights position={[0, 6, 10]} />
         <Table position={[0, -7.5, 0]} castShadow receiveShadow />
         <Clock
@@ -99,7 +98,19 @@ const Scene = () => {
           y={0}
           z={0}
         />
-        {/* <Plant iterations={5} x={-1} y={0} z={-1} u={0.1} /> */}
+
+        {/* Bunny */}
+        <Model
+          objpath={"/models/Bunny/Bunny.obj"}
+          mtlpath={"/models/Bunny/Bunny.mtl"}
+          texpath={"/models/Bunny/BunnyColor.png"}
+          mat={"Giraffe_mat"}
+          u={1}
+          x={-1}
+          y={0}
+          z={-1}
+        />
+
         <Plant iterations={1} x={0} y={0} z={2} u={0.1} />
         <Plant iterations={1} x={0} y={0} z={-2} u={0.1} />
         {/* <Plant iterations={2} x={-2} y={0} z={0} u={0.1} rotate={Math.PI} />
