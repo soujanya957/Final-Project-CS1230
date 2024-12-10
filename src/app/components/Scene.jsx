@@ -10,7 +10,6 @@ import GlassSphere from "./GlassSphere";
 import Table from "./Table";
 import Lights from "./Lights";
 import Plant from "./Plant";
-import Rain from "./Rain";
 import Model from "./Model";
 import Clock from "./Clock";
 import GlassBowlStand from "./GlassBowlStand";
@@ -106,6 +105,18 @@ const Scene = () => {
           x={1.5}
           y={0}
           z={0}
+        />
+
+        {/* Bunny */}
+        <Model
+          objpath={"/models/Bunny/Bunny.obj"}
+          mtlpath={"/models/Bunny/Bunny.mtl"}
+          texpath={"/models/Bunny/BunnyColor.png"}
+          mat={"Giraffe_mat"}
+          u={1}
+          x={-1}
+          y={0}
+          z={-1}
         />
 
         {/* <Plant iterations={5} x={-1} y={0} z={-1} u={0.1} /> */}
