@@ -11,23 +11,13 @@ import Weather from "./Weather";
 import FogOverlay from "./Weather/FogOverlay";
 
 export default function GlassSphere({ position }) {
-  // control radius of glass sphere and terrain inside
-  const radius = 3;
-
-  // Control parameters for glass material properties
-  const materialProps = useControls("Glass Material", {
+  // Control parameter for glass thickness
+  const { thickness } = useControls("Glass Material", {
     thickness: { value: 0.2, min: 0, max: 5, step: 0.1 }, // Control for glass thickness
-    roughness: { value: 0, min: 0, max: 1, step: 0.1 },
-    transmission: { value: 1, min: 0, max: 1, step: 0.1 }, // High value for clear glass
-    ior: { value: 1.5, min: 1, max: 3, step: 0.1 }, // Index of refraction
-    chromaticAberration: { value: 0.005, min: 0, max: 0.1, step: 0.005 },
-    clearcoat: { value: 1, min: 0, max: 1, step: 0.1 },
-    clearcoatRoughness: { value: 0.0, min: 0, max: 1, step: 0.1 },
-    backside: { value: true }, // Ensure backside rendering for inner layer
   });
 
   // Calculate the inner radius based on the thickness
-  const innerRadius = 3 - materialProps.thickness; // Adjust 3 based on the outer sphere radius
+  const innerRadius = 3 - thickness; // Adjust 3 based on the outer sphere radius
 
   // const pondRef = useRef();
 
@@ -102,9 +92,16 @@ export default function GlassSphere({ position }) {
     <group position={position}>
       {/* Outer glass sphere */}
       <mesh castShadow receiveShadow>
-        <sphereGeometry args={[3, 64, 64]} />
+        <sphereGeometry args={[radius, 64, 64]} />
         <MeshTransmissionMaterial
-          {...materialProps}
+          ref={materialRef}
+          thickness={thickness}
+          transmission={1} // High value for clear glass
+          roughness={0} // Default value for roughness
+          ior={1.5} // Default index of refraction
+          chromaticAberration={0.005} // Default chromatic aberration
+          clearcoat={0.5} // Default clearcoat
+          clearcoatRoughness={0.5} // Default clearcoat roughness
           color="white"
           attenuationDistance={10}
           attenuationColor="lightblue"
@@ -116,10 +113,13 @@ export default function GlassSphere({ position }) {
       <mesh castShadow receiveShadow>
         <sphereGeometry args={[innerRadius, 64, 64]} />
         <MeshTransmissionMaterial
-          {...materialProps}
-          color="white"
-          attenuationDistance={10}
-          attenuationColor="lightblue"
+          thickness={thickness}
+          transmission={1} // High value for clear glass
+          roughness={0} // Default value for roughness
+          ior={1.5} // Default index of refraction
+          chromaticAberration={0.005} // Default chromatic aberration
+          clearcoat={0.5} // Default clearcoat
+          clearcoatRoughness={0.5} // Default clearcoat roughness
           transparent
           opacity={0.0} // Make the inner sphere invisible
           backside={false} // Disable backside rendering for the inner layer
@@ -127,24 +127,20 @@ export default function GlassSphere({ position }) {
           side={THREE.DoubleSide}
         />
       </mesh>
+
       {/* Ambient light inside the sphere */}
-      <ambientLight
-        intensity={1} // Adjust intensity as needed
-        color={0xffffff} // White light
-      />
+      <ambientLight intensity={1} color={0xffffff} />
 
-      <Boids radius={innerRadius} />
-
+      <Boids radiius={innerRadius} />
       <Terrain radius={innerRadius} castShadow receiveShadow />
-      {/* <WavyPond radius={innerRadius * 0.5} /> */}
 
       {/* Weather Effects */}
-      {/* <Weather
+      <Weather
         weatherType={weatherType}
         intensity={intensity}
         windSpeed={windSpeed}
         radius={innerRadius} // Constrain effects to the sphere's inner radius
-      /> */}
+      />
     </group>
   );
 }
