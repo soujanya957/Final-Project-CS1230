@@ -1,6 +1,9 @@
 import React, { useMemo } from "react";
 import * as THREE from "three";
 
+import Pond from "./Pond";
+import Rain from "./Rain";
+
 export default function Terrain({ resolution = 100, radius }) {
   const grassTexture = useMemo(() => {
     const loader = new THREE.TextureLoader();
@@ -171,6 +174,8 @@ export default function Terrain({ resolution = 100, radius }) {
           wireframe={false}
           flatShading={false}
         />
+
+      
       </mesh>
     </>
   );

@@ -43,11 +43,6 @@ const Scene = () => {
         {<Environment preset="sunset" background />}
         <Lights position={[0, 6, 10]} />
         <Table position={[0, -7.5, 0]} castShadow receiveShadow />
-        <Clock
-          position={[5, -5, 2]}
-          rotation={[0, -Math.PI / 2, Math.PI / 10]} // Rotate 45 degrees around Y-axis
-          castShadow={true} // Ensure shadows are cast
-        />
 
         <DeskLamp position={[-5, -3.125, -2]} />
         {/* Secondary Desk Lamp if the scene is not brough enough*/} 
@@ -112,7 +107,7 @@ const Scene = () => {
         <Plant iterations={1} x={0} y={0} z={1} u={0.1} />
 
         <Clock
-          position={[5, -0.55, 0]}
+          position={[5, -2.025, 0]}
           rotation={[0, -Math.PI / 2, Math.PI / 10]} // Rotate 45 degrees around Y-axis
           castShadow={true}
         />
