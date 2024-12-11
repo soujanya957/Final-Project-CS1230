@@ -104,6 +104,7 @@ export default function GlassSphere({ position }) {
           color="white"
           attenuationDistance={10}
           attenuationColor="lightblue"
+          side={THREE.DoubleSide}
         />
       </mesh>
 
@@ -119,7 +120,7 @@ export default function GlassSphere({ position }) {
           opacity={0.0} // Make the inner sphere invisible
           backside={false} // Disable backside rendering for the inner layer
           depthWrite={false} // Disable depth writing for the inner layer
-
+          side={THREE.DoubleSide}
         />
       </mesh>
       {/* Ambient light inside the sphere */}
