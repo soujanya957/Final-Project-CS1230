@@ -4,6 +4,7 @@ import { MeshTransmissionMaterial } from "@react-three/drei";
 import { useControls } from "leva";
 import { useThree, useFrame } from "@react-three/fiber";
 
+import { Boids } from ".//Boids";
 import Terrain from "./Terrain";
 import WavyPond from "./Pond";
 import Weather from "./Weather";
@@ -59,7 +60,10 @@ export default function GlassSphere({ position }) {
     const isInsideGlassSphere = camera.position.length() < innerRadius;
 
     // Update fog parameters based on camera position and weather type
-    if (isInsideGlassSphere && (weatherType === "foggy" || weatherType === "snowy")) {
+    if (
+      isInsideGlassSphere &&
+      (weatherType === "foggy" || weatherType === "snowy")
+    ) {
       scene.fog.color.set(0xb0e0e6); // Powder Blue for fog
       const effectiveIntensity = intensity > 2 ? intensity / 2 : 1;
       scene.fog.density = 0.25 * effectiveIntensity; // Increase density for visibility
@@ -129,16 +133,18 @@ export default function GlassSphere({ position }) {
         color={0xffffff} // White light
       />
 
-      <Terrain radius={radius} castShadow receiveShadow />
+      <Boids radius={innerRadius} />
+
+      <Terrain radius={innerRadius} castShadow receiveShadow />
       {/* <WavyPond radius={innerRadius * 0.5} /> */}
 
       {/* Weather Effects */}
-      <Weather
+      {/* <Weather
         weatherType={weatherType}
         intensity={intensity}
         windSpeed={windSpeed}
         radius={innerRadius} // Constrain effects to the sphere's inner radius
-      />
+      /> */}
     </group>
   );
 }
