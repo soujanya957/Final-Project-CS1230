@@ -77,7 +77,7 @@ const Scene = () => {
         <DeskLamp position={[-5, -3.125, -2]} />
         {/* Secondary Desk Lamp if the scene is not brough enough*/}
         <PointLamp position={[4, -3.125, -3]} />
-        {<gridHelper args={[10, 10]} />}
+        {/* {<gridHelper args={[10, 10]} />} */}
         {/* Terrarium Focused Components} */}
         <GlassSphere position={[0, 1, 0]} />
         <GlassBowlStand position={[0, -2, 0]} castShadow receiveShadow />

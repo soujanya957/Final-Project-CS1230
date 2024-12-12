@@ -35,7 +35,7 @@ export const Boids = ({ radius }) => {
   } = useControls(
     "Boid Settings",
     {
-      NUM_BOIDS: { value: 10, min: 1, max: 30, step: 1 },
+      NUM_BOIDS: { value: 5, min: 1, max: 30, step: 1 },
       MIN_SCALE: { value: 1, min: 1, max: 2, step: 0.1 },
       MAX_SCALE: { value: 2, min: 1, max: 3, step: 0.1 },
       MIN_SPEED: { value: 0.5, min: 0, max: 10, step: 0.1 },

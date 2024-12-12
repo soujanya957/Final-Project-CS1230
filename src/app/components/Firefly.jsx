@@ -3,7 +3,7 @@ import * as THREE from "three";
 import { Text } from "@react-three/drei";
 
 const Firefly = ({
-  light = false,
+  light = true,
   bodyColor = 0xffe066, // Yellow body
   wingColor = 0xffd700, // Golden yellow wings
   lightColor = 0xffff00, // Bright yellow light

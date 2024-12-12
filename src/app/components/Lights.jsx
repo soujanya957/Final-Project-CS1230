@@ -10,7 +10,7 @@ export default function Lights({ position }) {
   const transform = useRef();
   const orbit = useRef();
 
-  useHelper(light, DirectionalLightHelper, 2);
+  // useHelper(light, DirectionalLightHelper, 2);
   const { gl } = useThree();
 
   // Initial distance from center and light height
