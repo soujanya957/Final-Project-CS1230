@@ -17,6 +17,7 @@ import DeskLamp from "./DeskLamp";
 import PointLamp from "./PointerLamp";
 import PlayerMovement from "./PlayerMovement";
 import Marigold from "./Marigold";
+import AnimatedCow from "./AnimatedCow";
 
 const Scene = () => {
   const orbitRef = useRef();
@@ -40,7 +41,7 @@ const Scene = () => {
           powerPreference: "high-performance",
         }}
       >
-        {<Environment preset="sunset" background />}
+        {/* {<Environment preset="sunset" background />} */}
         <Lights position={[0, 6, 10]} />
         <Table position={[0, -7.5, 0]} castShadow receiveShadow />
 
@@ -51,6 +52,9 @@ const Scene = () => {
         {/* Terrarium Focused Components} */}
         <GlassSphere position={[0, 1, 0]} />
         <GlassBowlStand position={[0, -2, 0]} castShadow receiveShadow />
+
+        <AnimatedCow scale={0.1} position={[1.5, 0, 0]} />
+
         {/* Giraffe */}
         <Model
           objpath={"/models/Giraffe.obj"}
@@ -81,17 +85,6 @@ const Scene = () => {
           mat={"Mat"}
           u={0.006}
           x={0}
-          y={0}
-          z={0}
-        />
-        {/* Cow */}
-        <Model
-          objpath={"/models/Cow/Cow.obj"}
-          mtlpath={"/models/Cow/Cow.mtl"}
-          texpath={"/models/Cow/Cow_BaseColor.png"}
-          mat={"Cow_mat"}
-          u={0.1}
-          x={1.5}
           y={0}
           z={0}
         />
