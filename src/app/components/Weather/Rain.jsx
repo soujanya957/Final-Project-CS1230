@@ -1,18 +1,14 @@
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
-import { useFrame, useThree } from "@react-three/fiber";
-import { EffectComposer, SelectiveBloom } from "@react-three/postprocessing";
+import { useFrame } from "@react-three/fiber";
 import PropTypes from "prop-types";
 import Clouds from "./Clouds";
+
 
 export default function Rain({ position = [0, 0, 0], radius, intensity }) {
   const rainref = useRef();
   const lightningRef = useRef();
-  const lightningMeshRef = useRef();
   const [lightningVisible, setLightningVisible] = React.useState(false);
-  const [lightningPosition, setLightningPosition] = React.useState(null);
-
-  const { scene, camera } = useThree();
 
   const speedIntensity = Math.max(2.0, intensity * 5.0);
   const num_rain = Math.max(1, Math.floor(150 * intensity));
@@ -62,11 +58,6 @@ export default function Rain({ position = [0, 0, 0], radius, intensity }) {
 
     // Randomly toggle lightning visibility
     if (Math.random() < 0.005) {
-      const lightningStartX = position[0] + (Math.random() - 0.5) * radius * 2;
-      const lightningStartY = position[1] + 5;
-      const lightningStartZ = position[2] + (Math.random() - 0.5) * radius * 2;
-      
-      setLightningPosition([lightningStartX, lightningStartY, lightningStartZ]);
       setLightningVisible(true);
       setTimeout(() => setLightningVisible(false), 200); // Lightning lasts 200ms
     }
@@ -77,16 +68,16 @@ export default function Rain({ position = [0, 0, 0], radius, intensity }) {
     const geometry = new THREE.BufferGeometry();
     const vertices = [];
 
-    if (!lightningPosition) return geometry;
-
-    const [startX, startY, startZ] = lightningPosition;
+    const startX = position[0] + (Math.random() - 0.5) * radius * 2;
+    const startY = position[1]; // Cloud height
+    const startZ = position[2] + (Math.random() - 0.5) * radius * 2;
 
     const endX = startX + (Math.random() - 0.5) * radius * 0.2;
-    const endY = position[1]; // Ground level
+    const endY = position[1] - 5; // Ground level
     const endZ = startZ + (Math.random() - 0.5) * radius * 0.2;
 
     // Generate intermediate points for jagged path
-    const numSegments = 6; // Number of segments
+    const numSegments = 3; // Number of segments
     for (let i = 0; i <= numSegments; i++) {
       const t = i / numSegments;
       const x = THREE.MathUtils.lerp(startX, endX, t) + (Math.random() - 0.5) * 0.3;
@@ -100,54 +91,23 @@ export default function Rain({ position = [0, 0, 0], radius, intensity }) {
   };
 
   return (
-    <>
-      <group>
-        {/* Rain */}
-        <points ref={rainref} position={[position[0], position[1] - 11, position[2]]} renderOrder={1}>
-          <pointsMaterial size={0.07} map={texture} transparent={true} />
-        </points>
+    <group>
+      {/* Rain */}
+      <points ref={rainref} position={[position[0], position[1] - 11, position[2]]} renderOrder={1}>
+        <pointsMaterial size={0.07} map={texture} transparent={true} />
+      </points>
 
-        {/* Clouds */}
-        <Clouds position={[position[0], position[1] - 11, position[2]]} radius={radius - 1} weatherType={"rain"} />
+      {/* Clouds */}
+      <Clouds position={[position[0], position[1] - 11, position[2]]} radius={radius - 1} weatherType={"rain"} />
 
-        {/* Lightning */}
-        {lightningVisible && lightningPosition && (
-          <>
-            <line ref={lightningRef} position={[position[0], position[1] - 11, position[2]]}>
-              <bufferGeometry attach="geometry" {...createLightning()} />
-              <lineBasicMaterial 
-                attach="material" 
-                color="white" 
-                linewidth={5} 
-                transparent={true}
-                opacity={0.8}
-              />
-            </line>
-
-            {/* Mesh for Selective Bloom */}
-            <mesh 
-              ref={lightningMeshRef} 
-              position={lightningPosition}
-              visible={false}
-            >
-              <sphereGeometry args={[0.2, 32, 32]} />
-              <meshBasicMaterial color="white" />
-            </mesh>
-
-            {/* Selective Bloom Effect */}
-            <EffectComposer>
-              <SelectiveBloom 
-                selection={[lightningMeshRef.current]} 
-                intensity={3} 
-                kernelSize={5} 
-                luminanceThreshold={0.2} 
-                luminanceSmoothing={0.5}
-              />
-            </EffectComposer>
-          </>
-        )}
-      </group>
-    </>
+      {/* Lightning */}
+      {lightningVisible && (
+        <line ref={lightningRef} position={[position[0], position[1] - 11, position[2]]}>
+          <bufferGeometry attach="geometry" {...createLightning()} />
+          <lineBasicMaterial attach="material" color="yellow" linewidth={5} />
+        </line>
+      )}
+    </group>
   );
 }
 

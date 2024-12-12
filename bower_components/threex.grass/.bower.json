@@ -1,0 +1,14 @@
+{
+  "name": "threex.grass",
+  "homepage": "https://github.com/jeromeetienne/threex.grass",
+  "_release": "da2b959c4d",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "da2b959c4da36d186ee273958465d4005d7702fb"
+  },
+  "_source": "https://github.com/jeromeetienne/threex.grass.git",
+  "_target": "*",
+  "_originalSource": "threex.grass",
+  "_direct": true
+}

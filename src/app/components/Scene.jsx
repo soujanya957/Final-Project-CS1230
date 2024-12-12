@@ -108,7 +108,7 @@ const Scene = () => {
           z={1}
         />
         {/* Tree */}
-        {/* <Model
+        <Model
           objpath={"/models/Tree/tree01.obj"}
           mtlpath={"/models/Tree/tree01.mtl"}
           texpath={"/models/Tree/tree_texture.png"}
@@ -117,7 +117,7 @@ const Scene = () => {
           x={0}
           y={0}
           z={0}
-        /> */}
+        />
         {/* Cow */}
         <Model
           objpath={"/models/Cow/Cow.obj"}
