@@ -35,8 +35,8 @@ export const Boids = ({ radius }) => {
     "Boid Settings",
     {
       NUM_BOIDS: { value: 10, min: 1, max: 30, step: 1 },
-      MIN_SCALE: { value: 0.05, min: 0.05, max: 0.05, step: 0.05 },
-      MAX_SCALE: { value: 0.05, min: 0.05, max: 0.05, step: 0.05 },
+      MIN_SCALE: { value: 0.001, min: 0.001, max: 0.001, step: 0.001 },
+      MAX_SCALE: { value: 0.001, min: 0.001, max: 0.001, step: 0.001 },
       MIN_SPEED: { value: 0.5, min: 0, max: 10, step: 0.1 },
       MAX_SPEED: { value: 1.5, min: 0, max: 10, step: 0.1 },
       MAX_STEERING: { value: 0.1, min: 0, max: 1, step: 0.01 },
