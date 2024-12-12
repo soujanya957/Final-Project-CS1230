@@ -38,3 +38,5 @@ cd into the main directory then type npm run dev
 
 ![terrarium](https://github.com/user-attachments/assets/68655bca-82af-40a4-8710-dc235c29aa70)
 
+## Demo Video
+[Link to Demo Video!](https://drive.google.com/file/d/1_4DNTLEKRf7IpYz4c4H9N5Al97zmScdv/view?usp=sharing)
