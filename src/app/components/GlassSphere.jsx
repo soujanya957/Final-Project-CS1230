@@ -11,10 +11,9 @@ import Weather from "./Weather";
 import FogOverlay from "./Weather/FogOverlay";
 import Soil from "./Soil";
 
-
 export default function GlassSphere({ position }) {
   const radius = 3;
-  
+
   // Control parameter for glass thickness
   const { thickness } = useControls("Glass Material", {
     thickness: { value: 0.2, min: 0, max: 5, step: 0.1 }, // Control for glass thickness
@@ -135,8 +134,9 @@ export default function GlassSphere({ position }) {
       {/* Ambient light inside the sphere */}
       <ambientLight intensity={1} color={0xffffff} />
 
-    {/* <Soil innerRadius={innerRadius} /> */}
-    <Terrain radius={innerRadius} castShadow receiveShadow />
+      <Boids radius={innerRadius} />
+      {/* <Soil innerRadius={innerRadius} /> */}
+      <Terrain radius={innerRadius} castShadow receiveShadow />
 
       {/* Weather Effects */}
       <Weather

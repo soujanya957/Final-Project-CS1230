@@ -59,7 +59,7 @@ const Scene = () => {
           powerPreference: "high-performance",
         }}
       >
-        <Environment preset="sunset" background />
+        {/* <Environment preset="sunset" background /> */}
         <Lights position={[0, 6, 10]} />
         <Table position={[0, -7.5, 0]} castShadow receiveShadow />
         {/* <mesh visible={boundaries.debug}>

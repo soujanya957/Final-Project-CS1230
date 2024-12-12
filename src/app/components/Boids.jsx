@@ -5,6 +5,7 @@ import { useControls } from "leva";
 import { Vector3 } from "three";
 import { SkeletonUtils } from "three-stdlib";
 import { randFloat, randInt } from "three/src/math/MathUtils.js";
+import Firefly from "./Firefly";
 
 // Preload the GLTF model
 useGLTF.preload("/models/Koi/Koi_01.glb");
@@ -59,7 +60,7 @@ export const Boids = ({ radius }) => {
     {
       ALIGN_CIRCLE: false,
       ALIGN_RADIUS: { value: 1.2, min: 0, max: 10, step: 0.1 },
-      ALIGN_STRENGTH: { value: 4, min: 0, max: 10, step: 1 },
+      ALIGN_STRENGTH: { value: 2, min: 0, max: 10, step: 1 },
     },
     { collapsed: true }
   );
@@ -78,8 +79,8 @@ export const Boids = ({ radius }) => {
     "Cohesion",
     {
       COHESION_CIRCLE: false,
-      COHESION_RADIUS: { value: 1.22, min: 0, max: 2 },
-      COHESION_STRENGTH: { value: 4, min: 0, max: 10, step: 1 },
+      COHESION_RADIUS: { value: 1, min: 0, max: 2 },
+      COHESION_STRENGTH: { value: 2, min: 0, max: 10, step: 1 },
     },
     { collapsed: true }
   );
@@ -136,9 +137,9 @@ export const Boids = ({ radius }) => {
 
       const distanceFromCenter = boid.position.length();
       // LIMITS
-      if (distanceFromCenter + 0.5 > radius) {
+      if (distanceFromCenter + 1 > radius) {
         // Reflect the boid back into the sphere
-        boid.position.setLength(radius - 0.5); // Adjust position to stay within bounds
+        boid.position.setLength(radius - 1); // Adjust position to stay within bounds
         boid.velocity.reflect(boid.position.clone().normalize()); // Reflect velocity
         boid.wander += Math.PI; // Change wander direction
       }
@@ -202,13 +203,13 @@ export const Boids = ({ radius }) => {
         steering.add(avoidance);
       }
 
-      if (COHESION && totalCohesion > 0) {
-        cohesion.divideScalar(totalCohesion);
-        cohesion.sub(boid.position);
-        cohesion.normalize();
-        cohesion.multiplyScalar(COHESION_STRENGTH);
-        steering.add(cohesion);
-      }
+      //   if (COHESION && totalCohesion > 0) {
+      //     cohesion.divideScalar(totalCohesion);
+      //     cohesion.sub(boid.position);
+      //     cohesion.normalize();
+      //     cohesion.multiplyScalar(COHESION_STRENGTH);
+      //     steering.add(cohesion);
+      //   }
 
       steering.clampLength(0, MAX_STEERING * delta);
       boid.velocity.add(steering);
@@ -286,7 +287,8 @@ const Boid = ({
 
   return (
     <group {...props} ref={group} position={position}>
-      <primitive object={clone} rotation-y={Math.PI / 2} />
+      <Firefly position={position} />
+      {/* <primitive object={clone} rotation-y={Math.PI / 2} /> */}
       <mesh visible={wanderCircle}>
         <sphereGeometry args={[wanderRadius, 32]} />
         <meshBasicMaterial color={"red"} wireframe />
