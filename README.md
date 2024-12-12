@@ -1,5 +1,5 @@
 ## The Terrarium
-Our group, [Giraffe Emoji] made a terrarium for our final project with a slight twist- including its own weather and animals that you might not expect to find in a traditional terrarium. 
+Our group, 🦒 made a terrarium for our final project with a slight twist- including its own weather and animals that you might not expect to find in a traditional terrarium. 
 
 ## Major Features
 - A Weather simulation (Sunny, Rainy, Snowy, Foggy)
