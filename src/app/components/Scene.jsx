@@ -18,6 +18,8 @@ import PointLamp from "./PointerLamp";
 import PlayerMovement from "./PlayerMovement";
 import Marigold from "./Marigold";
 import AnimatedCow from "./AnimatedCow";
+import Firefly from "./Fireflies";
+
 
 const Scene = () => {
   const orbitRef = useRef();
@@ -29,6 +31,20 @@ const Scene = () => {
     ambientIntensity: 0.5,
     colorTemp: 6500,
   });
+
+    // Generate fireflies positions within the sphere
+    const generateFireflies = (count) => {
+      const fireflies = [];
+      for (let i = 0; i < count; i++) {
+        const x = Math.random() * 6 - 3; // Range -3 to 3
+        const y = Math.random() * 6 - 3; // Range -3 to 3
+        const z = Math.random() * 6 - 3; // Range -3 to 3
+        fireflies.push({ initialPosition: [x, y, z] });
+      }
+      return fireflies;
+    };
+  
+    const fireflies = generateFireflies(20); // Generate 20 fireflies
 
   // const boundaries = useControls(
   //   "Boundaries",
@@ -60,7 +76,7 @@ const Scene = () => {
           powerPreference: "high-performance",
         }}
       >
-        {/* <Environment preset="sunset" background /> */}
+        <Environment preset="sunset" background />
         <Lights position={[0, 6, 10]} />
         <Table position={[0, -7.5, 0]} castShadow receiveShadow />
         {/* <mesh visible={boundaries.debug}>
@@ -146,6 +162,16 @@ const Scene = () => {
           rotation={[0, -Math.PI / 2, Math.PI / 10]} // Rotate 45 degrees around Y-axis
           castShadow={true}
         />
+
+        {/* Fireflies */}
+        {fireflies.map((firefly, index) => (
+          <Firefly 
+            key={index} 
+            initialPosition={firefly.initialPosition} 
+            boids={fireflies.map(f => ({ position: f.initialPosition }))} // Pass the other fireflies for boid behavior
+          />
+        ))}
+
         <OrbitControls ref={orbitRef} />
         <PlayerMovement />
       </Canvas>
