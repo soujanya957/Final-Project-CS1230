@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## The Terrarium
+Our group, 🦒 made a terrarium for our final project with a slight twist- including its own weather and animals that you might not expect to find in a traditional terrarium. 
 
-## Getting Started
+## Major Features
+- A Weather simulation (Sunny, Rainy, Snowy, Foggy)
+- A time of day slider
+- Plants made from an L-System
+- Fireflies acting as boids
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Smaller and Bonus Features
+- wavy grass, moved by wind speed
+- a moveable desk lamp
+- a clock counting the time
+- a (transparent) cow rigged and animated in blender
+- lots of 3D low poly animals and plants
+- transparency and refraction
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Libraries Used
+@React-three/fiber and @react-three/drei for our main features- loading models and frame by frame animation. We also used Leva for our sidebar controls.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Running Locally
+cd into the main directory then type npm run dev
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+## Gallery
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+![terrarium2](https://github.com/user-attachments/assets/7ba76996-2666-460a-bb28-1cbc833ddf60)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+![terrarium4](https://github.com/user-attachments/assets/64230330-8af4-4e7d-83f6-603de301608b)
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+![terrarium3](https://github.com/user-attachments/assets/95679491-2165-42c1-a8f0-2d6c80008ecf)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+![terrarium1](https://github.com/user-attachments/assets/16c57f2d-529b-416e-abf8-7312d1eba531)
+
+![terrarium](https://github.com/user-attachments/assets/68655bca-82af-40a4-8710-dc235c29aa70)
+
