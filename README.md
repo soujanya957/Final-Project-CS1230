@@ -1,14 +1,14 @@
 ## The Terrarium
 Our group, [Giraffe Emoji] made a terrarium for our final project with a slight twist- including its own weather and animals that you might not expect to find in a traditional terrarium. 
 
-##Major Features
+## Major Features
 - A Weather simulation (Sunny, Rainy, Snowy, Foggy)
 - A time of day slider
 - Plants made from an L-System
 - Fireflies acting as boids
 
 
-##Smaller and Bonus Features
+## Smaller and Bonus Features
 - wavy grass, moved by wind speed
 - a moveable desk lamp
 - a clock counting the time
@@ -17,14 +17,14 @@ Our group, [Giraffe Emoji] made a terrarium for our final project with a slight 
 - transparency and refraction
 
 
-##Libraries Used
+## Libraries Used
 @React-three/fiber and @react-three/drei for our main features- loading models and frame by frame animation. We also used Leva for our sidebar controls.
 
-##Running Locally
+## Running Locally
 cd into the main directory then type npm run dev
 
 
-##Gallery
+## Gallery
 
 ![terrarium2](https://github.com/user-attachments/assets/7ba76996-2666-460a-bb28-1cbc833ddf60)
 
