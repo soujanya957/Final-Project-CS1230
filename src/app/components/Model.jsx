@@ -10,12 +10,12 @@ export default function Model({ mtlpath, objpath, texpath, mat, u, x, y, z }) {
     mtl.preload();
     loader.setMaterials(mtl);
 
-    obj.traverse((child) => {
-      if (child.isMesh) {
-        child.castShadow = true;
-        child.receiveShadow = true;
-      }
-    });
+    // obj.traverse((child) => {
+    //   if (child.isMesh) {
+    //     child.castShadow = true;
+    //     child.receiveShadow = true;
+    //   }
+    // });
   });
 
   useEffect(() => {
