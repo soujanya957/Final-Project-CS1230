@@ -1,9 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment } from "@react-three/drei";
 
-import { Leva } from "leva";
+import { Leva, useControls } from "leva";
 import * as THREE from "three";
 
 import GlassSphere from "./GlassSphere";
@@ -30,10 +30,29 @@ const Scene = () => {
     colorTemp: 6500,
   });
 
+  // const boundaries = useControls(
+  //   "Boundaries",
+  //   {
+  //     debug: false,
+  //     x: { value: 12, min: 0, max: 40 },
+  //     y: { value: 8, min: 0, max: 40 },
+  //     z: { value: 20, min: 0, max: 40 },
+  //   },
+  //   { collapsed: true }
+  // );
+
+  // const [size, setSize] = useState([window.innerWidth, window.innerHeight]);
+  // const scaleX = Math.max(0.5, size[0] / 1920);
+  // const scaleY = Math.max(0.5, size[1] / 1080);
+  // const responsiveBoundaries = {
+  //   x: boundaries.x * scaleX,
+  //   y: boundaries.y * scaleY,
+  //   z: boundaries.z,
+  // };
+
   return (
     <>
       <Leva />
-
       <Canvas
         shadows
         gl={{
@@ -41,9 +60,24 @@ const Scene = () => {
           powerPreference: "high-performance",
         }}
       >
-        {/* {<Environment preset="sunset" background />} */}
+        <Environment preset="sunset" background />
         <Lights position={[0, 6, 10]} />
         <Table position={[0, -7.5, 0]} castShadow receiveShadow />
+        {/* <mesh visible={boundaries.debug}>
+          <boxGeometry
+            args={[
+              responsiveBoundaries.x,
+              responsiveBoundaries.y,
+              responsiveBoundaries.z,
+            ]}
+          >
+            <meshStandardMaterial
+              color="orange"
+              transparent
+              opacity={0.5}
+            ></meshStandardMaterial>
+          </boxGeometry>
+        </mesh> */}
 
         <DeskLamp position={[-5, -3.125, -2]} />
         {/* Secondary Desk Lamp if the scene is not brough enough*/}

@@ -29,7 +29,7 @@ export default function Rain({ position, radius }) {
       for (let i = 0; i < num_rain; i++) {
         // Generate random angle and distance within the circular radius
         const angle = Math.random() * 2 * Math.PI; // Random angle (0 to 2π)
-        const distance = Math.sqrt(Math.random()) * radius; // Random distance within radius
+        const distance = (Math.sqrt(Math.random()) * radius); // Random distance within radius
 
         // Convert polar coordinates to Cartesian coordinates
         const x = Math.cos(angle) * distance;

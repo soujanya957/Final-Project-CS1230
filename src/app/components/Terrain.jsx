@@ -3,12 +3,14 @@ import * as THREE from "three";
 
 import Pond from "./Pond";
 import Rain from "./Rain";
+import Soil from "./Soil";
+import Grass from "./Grass";
 
 export default function Terrain({ resolution = 100, radius }) {
   const grassTexture = useMemo(() => {
     const loader = new THREE.TextureLoader();
     return loader.load(
-      "/textures/grass.png",
+      "/textures/grass.jpg",
       () => console.log("Texture loaded"),
       undefined,
       (err) => console.error("Texture load error", err)
@@ -151,23 +153,6 @@ export default function Terrain({ resolution = 100, radius }) {
   return (
     <>
       <mesh geometry={geometry} position={[0, -1, 0]} scale={[0.8, 0.8, 0.8]}>
-        {/* <bufferGeometry> 
-      <bufferAttribute
-        attach="attributes-position"
-        array={new Float32Array(terrainData.positions)}
-        itemSize={3}
-      />
-      <bufferAttribute
-        attach="attributes-normal"
-        array={new Float32Array(terrainData.normals)}
-        itemSize={3}
-      />
-      <bufferAttribute
-        attach="attributes-color"
-        array={new Float32Array(terrainData.colors)}
-        itemSize={3}
-      />
-      </bufferGeometry> */}
         <meshPhongMaterial
           map={grassTexture}
           vertexColors={false}
@@ -175,7 +160,14 @@ export default function Terrain({ resolution = 100, radius }) {
           flatShading={false}
         />
 
-      
+        <Grass
+          width={100}
+          instances={50000}
+          terrainData={terrainData}
+          density={8000}
+          windSpeed={12}
+          clumping={0.45}
+        />
       </mesh>
     </>
   );
