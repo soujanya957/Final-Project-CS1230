@@ -8,7 +8,7 @@ import { randFloat, randInt } from "three/src/math/MathUtils.js";
 import Firefly from "./Firefly";
 
 // Preload the GLTF model
-useGLTF.preload("/models/Koi/Koi_01.glb");
+useGLTF.preload("/models/Firefly/firefly_minecraft.glb");
 
 function remap(value, low1, high1, low2, high2) {
   return low2 + ((high2 - low2) * (value - low1)) / (high1 - low1);
@@ -34,9 +34,9 @@ export const Boids = ({ radius }) => {
   } = useControls(
     "Boid Settings",
     {
-      NUM_BOIDS: { value: 15, min: 1, max: 50, step: 1 },
-      MIN_SCALE: { value: 0.7, min: 0.1, max: 2, step: 0.1 },
-      MAX_SCALE: { value: 1.3, min: 0.1, max: 2, step: 0.1 },
+      NUM_BOIDS: { value: 10, min: 1, max: 30, step: 1 },
+      MIN_SCALE: { value: 0.05, min: 0.05, max: 0.05, step: 0.05 },
+      MAX_SCALE: { value: 0.05, min: 0.05, max: 0.05, step: 0.05 },
       MIN_SPEED: { value: 0.5, min: 0, max: 10, step: 0.1 },
       MAX_SPEED: { value: 1.5, min: 0, max: 10, step: 0.1 },
       MAX_STEERING: { value: 0.1, min: 0, max: 1, step: 0.01 },
@@ -197,11 +197,11 @@ export const Boids = ({ radius }) => {
         steering.add(alignment);
       }
 
-      if (AVOIDANCE) {
-        avoidance.normalize();
-        avoidance.multiplyScalar(AVOID_STRENGTH);
-        steering.add(avoidance);
-      }
+      //   if (AVOIDANCE) {
+      //     avoidance.normalize();
+      //     avoidance.multiplyScalar(AVOID_STRENGTH);
+      //     steering.add(avoidance);
+      //   }
 
       //   if (COHESION && totalCohesion > 0) {
       //     cohesion.divideScalar(totalCohesion);
@@ -256,7 +256,9 @@ const Boid = ({
   cohesionRadius,
   ...props
 }) => {
-  const { scene, animations } = useGLTF("/models/Koi/Koi_01.glb");
+  const { scene, animations } = useGLTF(
+    "/models/Firefly/firefly_minecraft.glb"
+  );
   const clone = useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const group = useRef();
   const { actions } = useAnimations(animations, group);
@@ -287,8 +289,8 @@ const Boid = ({
 
   return (
     <group {...props} ref={group} position={position}>
-      <Firefly position={position} />
-      {/* <primitive object={clone} rotation-y={Math.PI / 2} /> */}
+      {/* <Firefly position={position} /> */}
+      <primitive object={clone} rotation-y={Math.PI / 2} />
       <mesh visible={wanderCircle}>
         <sphereGeometry args={[wanderRadius, 32]} />
         <meshBasicMaterial color={"red"} wireframe />

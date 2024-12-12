@@ -20,7 +20,6 @@ import Marigold from "./Marigold";
 import AnimatedCow from "./AnimatedCow";
 import Firefly from "./Fireflies";
 
-
 const Scene = () => {
   const orbitRef = useRef();
 
@@ -32,39 +31,19 @@ const Scene = () => {
     colorTemp: 6500,
   });
 
-    // Generate fireflies positions within the sphere
-    const generateFireflies = (count) => {
-      const fireflies = [];
-      for (let i = 0; i < count; i++) {
-        const x = Math.random() * 6 - 3; // Range -3 to 3
-        const y = Math.random() * 6 - 3; // Range -3 to 3
-        const z = Math.random() * 6 - 3; // Range -3 to 3
-        fireflies.push({ initialPosition: [x, y, z] });
-      }
-      return fireflies;
-    };
-  
-    const fireflies = generateFireflies(20); // Generate 20 fireflies
+  // Generate fireflies positions within the sphere
+  const generateFireflies = (count) => {
+    const fireflies = [];
+    for (let i = 0; i < count; i++) {
+      const x = Math.random() * 6 - 3; // Range -3 to 3
+      const y = Math.random() * 6 - 3; // Range -3 to 3
+      const z = Math.random() * 6 - 3; // Range -3 to 3
+      fireflies.push({ initialPosition: [x, y, z] });
+    }
+    return fireflies;
+  };
 
-  // const boundaries = useControls(
-  //   "Boundaries",
-  //   {
-  //     debug: false,
-  //     x: { value: 12, min: 0, max: 40 },
-  //     y: { value: 8, min: 0, max: 40 },
-  //     z: { value: 20, min: 0, max: 40 },
-  //   },
-  //   { collapsed: true }
-  // );
-
-  // const [size, setSize] = useState([window.innerWidth, window.innerHeight]);
-  // const scaleX = Math.max(0.5, size[0] / 1920);
-  // const scaleY = Math.max(0.5, size[1] / 1080);
-  // const responsiveBoundaries = {
-  //   x: boundaries.x * scaleX,
-  //   y: boundaries.y * scaleY,
-  //   z: boundaries.z,
-  // };
+  const fireflies = generateFireflies(20); // Generate 20 fireflies
 
   return (
     <>
@@ -76,7 +55,7 @@ const Scene = () => {
           powerPreference: "high-performance",
         }}
       >
-        {/* <Environment preset="sunset" background /> */}
+        <Environment preset="sunset" background />
         <Lights position={[0, 6, 10]} />
         <Table position={[0, -7.5, 0]} castShadow receiveShadow />
         {/* <mesh visible={boundaries.debug}>
@@ -164,13 +143,13 @@ const Scene = () => {
         />
 
         {/* Fireflies */}
-        {fireflies.map((firefly, index) => (
-          <Firefly 
-            key={index} 
-            initialPosition={firefly.initialPosition} 
-            boids={fireflies.map(f => ({ position: f.initialPosition }))} // Pass the other fireflies for boid behavior
+        {/* {fireflies.map((firefly, index) => (
+          <Firefly
+            key={index}
+            initialPosition={firefly.initialPosition}
+            boids={fireflies.map((f) => ({ position: f.initialPosition }))} // Pass the other fireflies for boid behavior
           />
-        ))}
+        ))} */}
 
         <OrbitControls ref={orbitRef} />
         <PlayerMovement />

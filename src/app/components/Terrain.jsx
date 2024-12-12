@@ -160,14 +160,14 @@ export default function Terrain({ resolution = 100, radius }) {
           flatShading={false}
         />
 
-        <Grass
+        {/* <Grass
           width={100}
           instances={50000}
           terrainData={terrainData}
           density={8000}
           windSpeed={12}
           clumping={0.45}
-        />
+        /> */}
       </mesh>
     </>
   );
