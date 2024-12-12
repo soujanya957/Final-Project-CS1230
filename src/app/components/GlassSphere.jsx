@@ -28,7 +28,7 @@ export default function GlassSphere({ position }) {
   const { camera, scene } = useThree(); // Correctly access the camera
 
   // Determine if the camera is inside the glass sphere (fog area)
-  const isInsideGlassSphere = () => camera.position.length() < radius;
+  const isInsideGlassSphere = () => camera.position.length() <= radius;
 
   // Weather controls
   const { weatherType, intensity, windSpeed } = useControls("Weather", {
@@ -145,6 +145,8 @@ export default function GlassSphere({ position }) {
         windSpeed={windSpeed}
         radius={innerRadius} // Constrain effects to the sphere's inner radius
       />
+
+      <WavyPond radius={innerRadius} />
     </group>
   );
 }

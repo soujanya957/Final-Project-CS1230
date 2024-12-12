@@ -17,6 +17,9 @@ import DeskLamp from "./DeskLamp";
 import PointLamp from "./PointerLamp";
 import PlayerMovement from "./PlayerMovement";
 import Marigold from "./Marigold";
+import AnimatedCow from "./AnimatedCow";
+import Firefly from "./Fireflies";
+
 
 const Scene = () => {
   const orbitRef = useRef();
@@ -28,6 +31,20 @@ const Scene = () => {
     ambientIntensity: 0.5,
     colorTemp: 6500,
   });
+
+    // Generate fireflies positions within the sphere
+    const generateFireflies = (count) => {
+      const fireflies = [];
+      for (let i = 0; i < count; i++) {
+        const x = Math.random() * 6 - 3; // Range -3 to 3
+        const y = Math.random() * 6 - 3; // Range -3 to 3
+        const z = Math.random() * 6 - 3; // Range -3 to 3
+        fireflies.push({ initialPosition: [x, y, z] });
+      }
+      return fireflies;
+    };
+  
+    const fireflies = generateFireflies(20); // Generate 20 fireflies
 
   // const boundaries = useControls(
   //   "Boundaries",
@@ -85,6 +102,9 @@ const Scene = () => {
         {/* Terrarium Focused Components} */}
         <GlassSphere position={[0, 1, 0]} />
         <GlassBowlStand position={[0, -2, 0]} castShadow receiveShadow />
+
+        <AnimatedCow scale={0.1} position={[1.5, 0, 0]} />
+
         {/* Giraffe */}
         <Model
           objpath={"/models/Giraffe.obj"}
@@ -118,17 +138,6 @@ const Scene = () => {
           y={0}
           z={0}
         />
-        {/* Cow */}
-        <Model
-          objpath={"/models/Cow/Cow.obj"}
-          mtlpath={"/models/Cow/Cow.mtl"}
-          texpath={"/models/Cow/Cow_BaseColor.png"}
-          mat={"Cow_mat"}
-          u={0.1}
-          x={1.5}
-          y={0}
-          z={0}
-        />
 
         {/* Rabbit */}
         <Model
@@ -153,6 +162,16 @@ const Scene = () => {
           rotation={[0, -Math.PI / 2, Math.PI / 10]} // Rotate 45 degrees around Y-axis
           castShadow={true}
         />
+
+        {/* Fireflies */}
+        {fireflies.map((firefly, index) => (
+          <Firefly 
+            key={index} 
+            initialPosition={firefly.initialPosition} 
+            boids={fireflies.map(f => ({ position: f.initialPosition }))} // Pass the other fireflies for boid behavior
+          />
+        ))}
+
         <OrbitControls ref={orbitRef} />
         <PlayerMovement />
       </Canvas>
