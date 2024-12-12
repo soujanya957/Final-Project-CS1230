@@ -8,7 +8,8 @@ import { randFloat, randInt } from "three/src/math/MathUtils.js";
 import Firefly from "./Firefly";
 
 // Preload the GLTF model
-useGLTF.preload("/models/Firefly/firefly_minecraft.glb");
+
+useGLTF.preload("/models/Firefly/firefly.glb");
 
 function remap(value, low1, high1, low2, high2) {
   return low2 + ((high2 - low2) * (value - low1)) / (high1 - low1);
@@ -35,8 +36,8 @@ export const Boids = ({ radius }) => {
     "Boid Settings",
     {
       NUM_BOIDS: { value: 10, min: 1, max: 30, step: 1 },
-      MIN_SCALE: { value: 0.001, min: 0.001, max: 0.001, step: 0.001 },
-      MAX_SCALE: { value: 0.001, min: 0.001, max: 0.001, step: 0.001 },
+      MIN_SCALE: { value: 1, min: 1, max: 2, step: 0.1 },
+      MAX_SCALE: { value: 2, min: 1, max: 3, step: 0.1 },
       MIN_SPEED: { value: 0.5, min: 0, max: 10, step: 0.1 },
       MAX_SPEED: { value: 1.5, min: 0, max: 10, step: 0.1 },
       MAX_STEERING: { value: 0.1, min: 0, max: 1, step: 0.01 },
@@ -256,9 +257,7 @@ const Boid = ({
   cohesionRadius,
   ...props
 }) => {
-  const { scene, animations } = useGLTF(
-    "/models/Firefly/firefly_minecraft.glb"
-  );
+  const { scene, animations } = useGLTF("/models/Firefly/firefly.glb");
   const clone = useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const group = useRef();
   const { actions } = useAnimations(animations, group);
@@ -289,8 +288,8 @@ const Boid = ({
 
   return (
     <group {...props} ref={group} position={position}>
-      {/* <Firefly position={position} /> */}
-      <primitive object={clone} rotation-y={Math.PI / 2} />
+      <Firefly position={position} />
+      {/* <primitive object={clone} rotation-y={Math.PI / 2} /> */}
       <mesh visible={wanderCircle}>
         <sphereGeometry args={[wanderRadius, 32]} />
         <meshBasicMaterial color={"red"} wireframe />

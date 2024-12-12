@@ -1,25 +1,15 @@
 import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
+import { Text } from "@react-three/drei";
 
 const Firefly = ({
-  light = true,
-  bodyColor = 0x5363b2,
-  wingColor = 0xa9b8fc,
-  lightColor = 0x00ffa5,
+  light = false,
+  bodyColor = 0xffe066, // Yellow body
+  wingColor = 0xffd700, // Golden yellow wings
+  lightColor = 0xffff00, // Bright yellow light
   initialPosition = [0, 0, 0],
-  boids = [],
 }) => {
   const groupRef = useRef(null);
-  const rightWingRef = useRef(null);
-  const leftWingRef = useRef(null);
-  const velocity = useRef(
-    new THREE.Vector3(
-      Math.random() - 0.5,
-      Math.random() - 0.5,
-      Math.random() - 0.5
-    )
-  );
-  const pointLightRef = useRef(null);
 
   useEffect(() => {
     if (!groupRef.current) return;
@@ -52,21 +42,18 @@ const Firefly = ({
     );
     rightWing.position.set(0.4, 0.1, 0);
     rightWing.rotation.z = Math.PI / 4;
-    rightWingRef.current = rightWing;
     group.add(rightWing);
 
     // Left Wing
     const leftWing = rightWing.clone();
     leftWing.position.x = -0.4;
     leftWing.rotation.z = -Math.PI / 4;
-    leftWingRef.current = leftWing;
     group.add(leftWing);
 
     // Light
     if (light) {
-      const pointLight = new THREE.PointLight(lightColor, 0, 10); // Set distance to 10
+      const pointLight = new THREE.PointLight(lightColor, 1, 5); // Static yellow light
       pointLight.position.set(0, -0.5, 0);
-      pointLightRef.current = pointLight;
       group.add(pointLight);
     }
 
@@ -81,107 +68,21 @@ const Firefly = ({
       wingGeometry.dispose();
       rightWing.material.dispose();
       leftWing.material.dispose();
-      if (pointLightRef.current) pointLightRef.current.dispose(); // Fixed line
     };
   }, [bodyColor, wingColor, lightColor, light, initialPosition]);
 
-  // Boid movement logic
-  useEffect(() => {
-    const animate = () => {
-      if (!groupRef.current || !pointLightRef.current) return; // Check for null references
-
-      const wingsFlapSpeed = 0.1; // Speed of flapping
-      const flapAngle = Math.sin(Date.now() * wingsFlapSpeed) * 0.1; // Flapping motion
-
-      // Update wing rotation for flapping
-      if (rightWingRef.current) rightWingRef.current.rotation.z += flapAngle;
-      if (leftWingRef.current) leftWingRef.current.rotation.z -= flapAngle;
-
-      // Update position based on velocity
-      groupRef.current.position.add(velocity.current);
-
-      // Boundary checking to keep fireflies inside a glass sphere (radius = 3 for example)
-      const radius = 3; // Match this to your GlassSphere radius
-      const position = groupRef.current.position;
-
-      if (position.length() > radius) {
-        position.normalize().multiplyScalar(radius); // Keep firefly inside the sphere
-      }
-
-      // Check for proximity with other components
-      const lightUpDistance = 2; // Proximity distance to light up
-      let shouldLightUp = false;
-
-      boids.forEach((boid) => {
-        const distance = position.distanceTo(boid.position);
-        if (distance < lightUpDistance) {
-          shouldLightUp = true; // Light up when near another boid
-        }
-      });
-
-      // Update light intensity based on proximity
-      pointLightRef.current.intensity = shouldLightUp ? 1 : 0; // Light up if in proximity
-
-      // Pulsate the light
-      const time = Date.now() * 0.001; // Normalize time for pulsation
-      pointLightRef.current.intensity += Math.sin(time * 2) * 0.2; // Pulsate intensity
-
-      // Boid movement logic
-      const separation = new THREE.Vector3();
-      const alignment = new THREE.Vector3();
-      const cohesion = new THREE.Vector3();
-      let total = 0;
-
-      boids.forEach((boid) => {
-        const distance = position.distanceTo(boid.position);
-        if (distance < 2) {
-          // Separation distance
-          const diff = new THREE.Vector3().subVectors(position, boid.position);
-          diff.normalize();
-          diff.divideScalar(distance);
-          separation.add(diff);
-        }
-
-        if (distance < 5) {
-          // Alignment distance
-          alignment.add(boid.velocity);
-          total++;
-        }
-
-        if (distance < 5) {
-          // Cohesion distance
-          cohesion.add(boid.position);
-        }
-      });
-
-      if (total > 0) {
-        alignment.divideScalar(total).normalize().multiplyScalar(0.1);
-        cohesion
-          .divideScalar(total)
-          .sub(position)
-          .normalize()
-          .multiplyScalar(0.1);
-        cohesion.add(alignment);
-      }
-
-      velocity.current.add(separation).add(alignment).add(cohesion);
-
-      // Limit speed
-      const speedLimit = 0.02; // Adjusted speed limit
-      if (velocity.current.length() > speedLimit) {
-        velocity.current.clampLength(0, speedLimit);
-      }
-
-      // Request next animation frame
-      requestAnimationFrame(animate);
-    };
-
-    const animationFrame = requestAnimationFrame(animate);
-
-    return () => cancelAnimationFrame(animationFrame);
-  }, [boids]);
-
-  return <group ref={groupRef} />;
+  return (
+    <group ref={groupRef}>
+      {/* Add Text */}
+      <Text
+        position={[1, 0, 0]} // Offset from the firefly
+        fontSize={0.2}
+        color="yellow" // Yellow text
+      >
+        hello
+      </Text>
+    </group>
+  );
 };
 
 export default Firefly;
